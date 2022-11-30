@@ -93,9 +93,9 @@ namespace StarterAssets
 
         // animation IDs
         private int _animIDSpeed;
-        private int _animIDGrounded;
-        private int _animIDJump;
-        private int _animIDFreeFall;
+        private int _animIDIsGrounded;
+        private int _animIDIsJumping;
+        private int _animIDIsFalling;
         private int _animIDMotionSpeed;
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
@@ -103,7 +103,7 @@ namespace StarterAssets
 #endif
         private Animator _animator;
         private CharacterController _controller;
-        private StarterAssetsInputs _input;
+        private InputController _input;
         private GameObject _mainCamera;
 
         private const float _threshold = 0.01f;
@@ -136,9 +136,10 @@ namespace StarterAssets
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
             
-            _hasAnimator = TryGetComponent(out _animator);
+            _animator = GetComponentInChildren<Animator>();
+            _hasAnimator = !!_animator;
             _controller = GetComponent<CharacterController>();
-            _input = GetComponent<StarterAssetsInputs>();
+            _input = GetComponent<InputController>();
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
             _playerInput = GetComponent<PlayerInput>();
 #else
@@ -152,9 +153,9 @@ namespace StarterAssets
             _fallTimeoutDelta = FallTimeout;
         }
 
-        private void Update()
-        {
-            _hasAnimator = TryGetComponent(out _animator);
+        private void Update() {
+            _animator = GetComponentInChildren<Animator>();
+            _hasAnimator = !!_animator;
 
             JumpAndGravity();
             GroundedCheck();
@@ -169,9 +170,9 @@ namespace StarterAssets
         private void AssignAnimationIDs()
         {
             _animIDSpeed = Animator.StringToHash("Speed");
-            _animIDGrounded = Animator.StringToHash("Grounded");
-            _animIDJump = Animator.StringToHash("Jump");
-            _animIDFreeFall = Animator.StringToHash("FreeFall");
+            _animIDIsGrounded = Animator.StringToHash("isGrounded");
+            _animIDIsJumping = Animator.StringToHash("isJumping");
+            _animIDIsFalling = Animator.StringToHash("isFalling");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         }
 
@@ -186,7 +187,7 @@ namespace StarterAssets
             // update animator if using character
             if (_hasAnimator)
             {
-                _animator.SetBool(_animIDGrounded, Grounded);
+                _animator.SetBool(_animIDIsGrounded, Grounded);
             }
         }
 
@@ -289,8 +290,8 @@ namespace StarterAssets
                 // update animator if using character
                 if (_hasAnimator)
                 {
-                    _animator.SetBool(_animIDJump, false);
-                    _animator.SetBool(_animIDFreeFall, false);
+                    _animator.SetBool(_animIDIsJumping, false);
+                    _animator.SetBool(_animIDIsFalling, false);
                 }
 
                 // stop our velocity dropping infinitely when grounded
@@ -308,7 +309,7 @@ namespace StarterAssets
                     // update animator if using character
                     if (_hasAnimator)
                     {
-                        _animator.SetBool(_animIDJump, true);
+                        _animator.SetBool(_animIDIsJumping, true);
                     }
                 }
 
@@ -333,7 +334,7 @@ namespace StarterAssets
                     // update animator if using character
                     if (_hasAnimator)
                     {
-                        _animator.SetBool(_animIDFreeFall, true);
+                        _animator.SetBool(_animIDIsFalling, true);
                     }
                 }
 
