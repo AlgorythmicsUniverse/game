@@ -93,9 +93,9 @@ namespace StarterAssets
 
         // animation IDs
         private int _animIDSpeed;
-        private int _animIDGrounded;
-        private int _animIDJump;
-        private int _animIDFreeFall;
+        private int _animIDIsGrounded;
+        private int _animIDIsJumping;
+        private int _animIDIsFalling;
         private int _animIDMotionSpeed;
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
@@ -170,9 +170,9 @@ namespace StarterAssets
         private void AssignAnimationIDs()
         {
             _animIDSpeed = Animator.StringToHash("Speed");
-            _animIDGrounded = Animator.StringToHash("Grounded");
-            _animIDJump = Animator.StringToHash("Jump");
-            _animIDFreeFall = Animator.StringToHash("FreeFall");
+            _animIDIsGrounded = Animator.StringToHash("isGrounded");
+            _animIDIsJumping = Animator.StringToHash("isJumping");
+            _animIDIsFalling = Animator.StringToHash("isFalling");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
         }
 
@@ -187,7 +187,7 @@ namespace StarterAssets
             // update animator if using character
             if (_hasAnimator)
             {
-                _animator.SetBool(_animIDGrounded, Grounded);
+                _animator.SetBool(_animIDIsGrounded, Grounded);
             }
         }
 
@@ -290,8 +290,8 @@ namespace StarterAssets
                 // update animator if using character
                 if (_hasAnimator)
                 {
-                    _animator.SetBool(_animIDJump, false);
-                    _animator.SetBool(_animIDFreeFall, false);
+                    _animator.SetBool(_animIDIsJumping, false);
+                    _animator.SetBool(_animIDIsFalling, false);
                 }
 
                 // stop our velocity dropping infinitely when grounded
@@ -309,7 +309,7 @@ namespace StarterAssets
                     // update animator if using character
                     if (_hasAnimator)
                     {
-                        _animator.SetBool(_animIDJump, true);
+                        _animator.SetBool(_animIDIsJumping, true);
                     }
                 }
 
@@ -334,7 +334,7 @@ namespace StarterAssets
                     // update animator if using character
                     if (_hasAnimator)
                     {
-                        _animator.SetBool(_animIDFreeFall, true);
+                        _animator.SetBool(_animIDIsFalling, true);
                     }
                 }
 
