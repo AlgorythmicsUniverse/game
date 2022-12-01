@@ -136,7 +136,8 @@ namespace StarterAssets
         {
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
             
-            _hasAnimator = TryGetComponent(out _animator);
+            _animator = GetComponentInChildren<Animator>();
+            _hasAnimator = !!_animator;
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
@@ -152,9 +153,9 @@ namespace StarterAssets
             _fallTimeoutDelta = FallTimeout;
         }
 
-        private void Update()
-        {
-            _hasAnimator = TryGetComponent(out _animator);
+        private void Update() {
+            _animator = GetComponentInChildren<Animator>();
+            _hasAnimator = !!_animator;
 
             JumpAndGravity();
             GroundedCheck();
