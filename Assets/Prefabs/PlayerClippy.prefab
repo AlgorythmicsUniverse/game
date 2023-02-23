@@ -280,6 +280,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8314dbf8fa4fe49beade0cac12a340, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maximumObjectPickUp: 3
+  orbitDistance: 1.5
+  orbitDegreesPerSec: 90
+  bobUpAndDownMultiplier: 0.25
+  characterHeight: 1
 --- !u!1 &8338988566280778634
 GameObject:
   m_ObjectHideFlags: 0
