@@ -51,27 +51,47 @@ public class ClippyController : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         GameObject obj = other.gameObject;
 
-        if (pickedUp.Contains(obj)) {
+        if (!obj.CompareTag("Hitbox")) {
+            // Is not a hitbox
+            return;
+        }
+
+        GameObject parentObj = obj.transform.parent.gameObject;
+
+        if (!parentObj.CompareTag("CodeBlock")) {
+            // Is not a CodeBlock
+            return;
+        }
+
+        if (pickedUp.Contains(parentObj)) {
             // This object has already been picked up.
             return;
         }
 
         if (pickedUp.Count >= maximumObjectPickUp) {
             // We cannot pick up more objects.
-            Debug.Log("Picked up too many objects");
             return;
         }
 
-        Debug.Log("Picked up: " + obj.name);
-
         // Pick the object up.
-        pickedUp.Add(obj);
+        pickedUp.Add(parentObj);
 
-        // Set the initial orbit rotation angle.
-        objectToRotAngle[obj] = 0;
+        // Initialize rotation for picked up object
+        objectToRotAngle[parentObj] = 0;
 
-        // Disable the collider of this object, since we have picked it up.
+        this.evenlyDividePickedup();
+
+        // Disable the collider of this object's hitbox, since we have picked it up.
         Collider collider = obj.GetComponent<Collider>();
         collider.enabled = false;
+    }
+
+    void evenlyDividePickedup() {
+        float step = 360f / pickedUp.Count;
+        int i = 0;
+        foreach (GameObject obj in pickedUp) {
+            objectToRotAngle[obj] = step * i;
+            i++;
+        }
     }
 }
