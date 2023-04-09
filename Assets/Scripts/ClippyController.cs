@@ -51,8 +51,17 @@ public class ClippyController : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         GameObject obj = other.gameObject;
 
-        if (pickedUp.Contains(obj)) {
+        if (!obj.CompareTag("Hitbox")) {
+            // Is not a hitbox
+            return;
+        }
+
         GameObject parentObj = obj.transform.parent.gameObject;
+
+        if (!parentObj.CompareTag("CodeBlock")) {
+            // Is not a CodeBlock
+            return;
+        }
 
         if (pickedUp.Contains(parentObj)) {
             // This object has already been picked up.
