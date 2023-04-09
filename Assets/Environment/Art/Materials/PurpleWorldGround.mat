@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShaderGraphGrid_01_Mat
+  m_Name: PurpleWorldGround
   m_Shader: {fileID: -6465566751694194690, guid: b8d7679189d4a5940af46004f3870920,
     type: 3}
   m_ValidKeywords: []
@@ -90,17 +90,17 @@ Material:
     m_Floats:
     - Boolean_35A71344: 0
     - Boolean_7A5F3F39: 1
-    - Boolean_7AC8D832: 1
-    - Vector1_3402D67A: 1
+    - Boolean_7AC8D832: 0
+    - Vector1_3402D67A: 0.2
     - Vector1_3655428E: 5
-    - Vector1_5B05FA1F: 0.062
+    - Vector1_5B05FA1F: 0
     - Vector1_6B67A8FF: -20
     - Vector1_7810F718: 1
-    - Vector1_B6126E6E: 0.335
+    - Vector1_B6126E6E: 0
     - Vector1_CA7D5F3: 30
     - Vector1_D5FBE925: 0.3
-    - Vector1_F2A922B4: 1.73
-    - Vector1_F5FD9210: 33.9
+    - Vector1_F2A922B4: 0.25
+    - Vector1_F5FD9210: 100
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -120,8 +120,8 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - Color_2B671050: {r: 0.23202202, g: 0.6245157, b: 0.745283, a: 0}
-    - Color_30A0CA2F: {r: 0.02745098, g: 1, b: 0.7565653, a: 0}
+    - Color_2B671050: {r: 0.047454514, g: 0.010545459, b: 0.23200001, a: 1}
+    - Color_30A0CA2F: {r: 0.3130467, g: 0.0102638425, b: 0.603, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
