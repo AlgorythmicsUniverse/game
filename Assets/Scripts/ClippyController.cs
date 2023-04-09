@@ -52,25 +52,25 @@ public class ClippyController : MonoBehaviour
         GameObject obj = other.gameObject;
 
         if (pickedUp.Contains(obj)) {
+        GameObject parentObj = obj.transform.parent.gameObject;
+
+        if (pickedUp.Contains(parentObj)) {
             // This object has already been picked up.
             return;
         }
 
         if (pickedUp.Count >= maximumObjectPickUp) {
             // We cannot pick up more objects.
-            Debug.Log("Picked up too many objects");
             return;
         }
 
-        Debug.Log("Picked up: " + obj.name);
-
         // Pick the object up.
-        pickedUp.Add(obj);
+        pickedUp.Add(parentObj);
 
-        // Set the initial orbit rotation angle.
-        objectToRotAngle[obj] = 0;
+        // Initialize rotation for picked up object
+        objectToRotAngle[parentObj] = 0;
 
-        // Disable the collider of this object, since we have picked it up.
+        // Disable the collider of this object's hitbox, since we have picked it up.
         Collider collider = obj.GetComponent<Collider>();
         collider.enabled = false;
     }
