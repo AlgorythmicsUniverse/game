@@ -79,16 +79,19 @@ public class ClippyController : MonoBehaviour
         // Initialize rotation for picked up object
         objectToRotAngle[parentObj] = 0;
 
-        // Reset rotation of each object.
-        float step = 360f / pickedUp.Count;
-        int i = 0;
-        foreach (GameObject gameObject in pickedUp) {
-            objectToRotAngle[gameObject] = step * i;
-            i++;
-        }
+        this.evenlyDividePickedup();
 
         // Disable the collider of this object's hitbox, since we have picked it up.
         Collider collider = obj.GetComponent<Collider>();
         collider.enabled = false;
+    }
+
+    void evenlyDividePickedup() {
+        float step = 360f / pickedUp.Count;
+        int i = 0;
+        foreach (GameObject obj in pickedUp) {
+            objectToRotAngle[obj] = step * i;
+            i++;
+        }
     }
 }
