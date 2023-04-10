@@ -1306,6 +1306,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 668350774816520296, guid: 64dce48905ffd9b4293e595fa6941544,
+        type: 3}
+      propertyPath: CodeblockTooltip
+      value: 
+      objectReference: {fileID: 1185320723643829539, guid: 873b1c6bc4667a54bb6ab74bf1f88a4e,
+        type: 3}
     - target: {fileID: 3893294197879345259, guid: 64dce48905ffd9b4293e595fa6941544,
         type: 3}
       propertyPath: m_RootOrder
