@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ClippyController : MonoBehaviour
 {
-    // The list of currently picked up game objects.
     private List<GameObject> pickedUp;
-
     private Dictionary<GameObject, float> objectToRotAngle;
+    private List<GameObject> nearbyObjects;
+    private Dictionary<GameObject, GameObject> tooltipsForNearbyObjects;
 
-    // How many code objects can Clippy pick up?
     [SerializeField]
     public int maximumObjectPickUp = 3;
 
@@ -25,14 +25,36 @@ public class ClippyController : MonoBehaviour
     [SerializeField]
     public float characterHeight = 1.0f;
 
+    [SerializeField]
+    public float minimumObjectDistance = 5.0f;
+
+    [SerializeField]
+    public GameObject CodeblockTooltip;
+
+    [SerializeField]
+    public float tooltipAltitude = 1.0f;
+
     void Start() {
-        // Instantiate an empty list of picked up items.
         pickedUp = new List<GameObject>();
         objectToRotAngle = new Dictionary<GameObject, float>();
+        nearbyObjects = new List<GameObject>();
+        tooltipsForNearbyObjects = new Dictionary<GameObject, GameObject>();
     }
 
-    void Update() {
-        // Update each picked up game object.
+    void Update() {}
+
+    void FixedUpdate() {
+        rotatePickedup();
+        storeNearbyObjects();
+        pointTooltipsTowardsPlayer();
+    }
+
+    void OnTriggerEnter(Collider other) {
+        handleCodeblockTrigger(other);
+    }
+
+    void rotatePickedup() {
+        // Rotate picked up items around Clippy
         foreach (GameObject obj in pickedUp) {
             float actualTheta = objectToRotAngle[obj] + (orbitDegreesPerSec * Time.deltaTime);
             objectToRotAngle[obj] = actualTheta;
@@ -48,7 +70,61 @@ public class ClippyController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other) {
+    void pointTooltipsTowardsPlayer() {
+        foreach (GameObject obj in tooltipsForNearbyObjects.Values) {
+            var lookPos = obj.transform.position - transform.position;
+            lookPos.y = 0;
+
+            var rotation = Quaternion.LookRotation(lookPos);
+            obj.transform.rotation = rotation;
+        }
+    }
+    
+    void storeNearbyObjects() {
+        // Store nearby objects in local list to prevent multiple triggering
+        List<GameObject> objects = new List<GameObject>(Utility.getNearbyObjectsWithTag(transform.position, "CodeBlock", minimumObjectDistance));
+        foreach (GameObject obj in objects) {
+            if (!pickedUp.Contains(obj) && !nearbyObjects.Contains(obj)) {
+                nearbyObjects.Add(obj);
+
+                // Create tooltip for object
+                GameObject tooltip = Instantiate(CodeblockTooltip, obj.transform.position + new Vector3(0, tooltipAltitude, 0), Quaternion.identity);
+                tooltip.transform.SetParent(obj.transform);
+                tooltipsForNearbyObjects[obj] = tooltip;
+
+                GameObject itemNameText = tooltip.transform.Find("Panel/ItemNameText").gameObject;
+                itemNameText.GetComponent<TMP_Text>().text = obj.GetComponent<CodeBlock>().Name;
+                
+                GameObject itemDescriptionText = tooltip.transform.Find("Panel/ItemDescriptionText").gameObject;
+                string descriptionText = obj.GetComponent<CodeBlock>().Description;
+                if (descriptionText.Length == 0) {
+                    descriptionText = "No description";
+                }
+                itemDescriptionText.GetComponent<TMP_Text>().text = descriptionText;
+            }
+        }
+
+        // Remove objects no longer nearby
+        foreach (GameObject obj in nearbyObjects.ToArray()) {
+            if (!objects.Contains(obj)) {
+                nearbyObjects.Remove(obj);
+
+                Destroy(tooltipsForNearbyObjects[obj]);
+                tooltipsForNearbyObjects.Remove(obj);
+            }
+        }
+    }
+
+    void evenlyDividePickedup() {
+        float step = 360f / pickedUp.Count;
+        int i = 0;
+        foreach (GameObject obj in pickedUp) {
+            objectToRotAngle[obj] = step * i;
+            i++;
+        }
+    }
+
+    void handleCodeblockTrigger(Collider other) {
         GameObject obj = other.gameObject;
 
         if (!obj.CompareTag("Hitbox")) {
@@ -76,6 +152,13 @@ public class ClippyController : MonoBehaviour
         // Pick the object up.
         pickedUp.Add(parentObj);
 
+        // Remove from nearbyObjects list
+        nearbyObjects.Remove(parentObj);
+
+        // Remove tooltip for object
+        Destroy(tooltipsForNearbyObjects[parentObj]);
+        tooltipsForNearbyObjects.Remove(parentObj);
+
         // Initialize rotation for picked up object
         objectToRotAngle[parentObj] = 0;
 
@@ -84,14 +167,5 @@ public class ClippyController : MonoBehaviour
         // Disable the collider of this object's hitbox, since we have picked it up.
         Collider collider = obj.GetComponent<Collider>();
         collider.enabled = false;
-    }
-
-    void evenlyDividePickedup() {
-        float step = 360f / pickedUp.Count;
-        int i = 0;
-        foreach (GameObject obj in pickedUp) {
-            objectToRotAngle[obj] = step * i;
-            i++;
-        }
     }
 }
