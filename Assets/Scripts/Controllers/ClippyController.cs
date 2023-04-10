@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ClippyController : MonoBehaviour
 {
@@ -90,6 +91,16 @@ public class ClippyController : MonoBehaviour
                 GameObject tooltip = Instantiate(CodeblockTooltip, obj.transform.position + new Vector3(0, tooltipAltitude, 0), Quaternion.identity);
                 tooltip.transform.SetParent(obj.transform);
                 tooltipsForNearbyObjects[obj] = tooltip;
+
+                GameObject itemNameText = tooltip.transform.Find("Panel/ItemNameText").gameObject;
+                itemNameText.GetComponent<TMP_Text>().text = obj.GetComponent<CodeBlock>().Name;
+                
+                GameObject itemDescriptionText = tooltip.transform.Find("Panel/ItemDescriptionText").gameObject;
+                string descriptionText = obj.GetComponent<CodeBlock>().Description;
+                if (descriptionText.Length == 0) {
+                    descriptionText = "No description";
+                }
+                itemDescriptionText.GetComponent<TMP_Text>().text = descriptionText;
             }
         }
 
