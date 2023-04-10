@@ -63,22 +63,9 @@ public class ClippyController : MonoBehaviour
         }
     }
     
-    GameObject[] getNearbyObjectsWithTag(string tag, float minimumDistance) {
-        GameObject[] objects = GameObject.FindGameObjectsWithTag(tag);
-
-        List<GameObject> nearbyObjects = new List<GameObject>();
-        foreach (GameObject obj in objects) {
-            if (Vector3.Distance(transform.position, obj.transform.position) <= minimumDistance) {
-                nearbyObjects.Add(obj);
-            }
-        }
-
-        return nearbyObjects.ToArray();
-    }
-    
     void storeNearbyObjects() {
         // Store nearby objects in local list to prevent multiple triggering
-        List<GameObject> objects = new List<GameObject>(getNearbyObjectsWithTag("CodeBlock", minimumObjectDistance));
+        List<GameObject> objects = new List<GameObject>(Utility.getNearbyObjectsWithTag(transform.position, "CodeBlock", minimumObjectDistance));
         foreach (GameObject obj in objects) {
             if (!pickedUp.Contains(obj) && !nearbyObjects.Contains(obj)) {
                 nearbyObjects.Add(obj);
