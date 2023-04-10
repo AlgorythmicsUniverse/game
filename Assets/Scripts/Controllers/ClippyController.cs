@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class ClippyController : MonoBehaviour
 {
-    // The list of currently picked up game objects.
     private List<GameObject> pickedUp;
     private Dictionary<GameObject, float> objectToRotAngle;
     private List<GameObject> nearbyObjects;
+    private Dictionary<GameObject, GameObject> tooltipsForNearbyObjects;
 
-    // How many code objects can Clippy pick up?
     [SerializeField]
     public int maximumObjectPickUp = 3;
 
@@ -28,11 +27,17 @@ public class ClippyController : MonoBehaviour
     [SerializeField]
     public float minimumObjectDistance = 5.0f;
 
+    [SerializeField]
+    public GameObject CodeblockTooltip;
+
+    [SerializeField]
+    public float tooltipAltitude = 1.0f;
+
     void Start() {
-        // Instantiate an empty list of picked up items.
         pickedUp = new List<GameObject>();
         objectToRotAngle = new Dictionary<GameObject, float>();
         nearbyObjects = new List<GameObject>();
+        tooltipsForNearbyObjects = new Dictionary<GameObject, GameObject>();
     }
 
     void Update() {}
@@ -40,6 +45,7 @@ public class ClippyController : MonoBehaviour
     void FixedUpdate() {
         rotatePickedup();
         storeNearbyObjects();
+        pointTooltipsTowardsPlayer();
     }
 
     void OnTriggerEnter(Collider other) {
@@ -62,6 +68,16 @@ public class ClippyController : MonoBehaviour
             obj.transform.position = new Vector3(x, y, z);
         }
     }
+
+    void pointTooltipsTowardsPlayer() {
+        foreach (GameObject obj in tooltipsForNearbyObjects.Values) {
+            var lookPos = obj.transform.position - transform.position;
+            lookPos.y = 0;
+
+            var rotation = Quaternion.LookRotation(lookPos);
+            obj.transform.rotation = rotation;
+        }
+    }
     
     void storeNearbyObjects() {
         // Store nearby objects in local list to prevent multiple triggering
@@ -69,6 +85,11 @@ public class ClippyController : MonoBehaviour
         foreach (GameObject obj in objects) {
             if (!pickedUp.Contains(obj) && !nearbyObjects.Contains(obj)) {
                 nearbyObjects.Add(obj);
+
+                // Create tooltip for object
+                GameObject tooltip = Instantiate(CodeblockTooltip, obj.transform.position + new Vector3(0, tooltipAltitude, 0), Quaternion.identity);
+                tooltip.transform.SetParent(obj.transform);
+                tooltipsForNearbyObjects[obj] = tooltip;
             }
         }
 
@@ -76,6 +97,9 @@ public class ClippyController : MonoBehaviour
         foreach (GameObject obj in nearbyObjects.ToArray()) {
             if (!objects.Contains(obj)) {
                 nearbyObjects.Remove(obj);
+
+                Destroy(tooltipsForNearbyObjects[obj]);
+                tooltipsForNearbyObjects.Remove(obj);
             }
         }
     }
@@ -119,6 +143,10 @@ public class ClippyController : MonoBehaviour
 
         // Remove from nearbyObjects list
         nearbyObjects.Remove(parentObj);
+
+        // Remove tooltip for object
+        Destroy(tooltipsForNearbyObjects[parentObj]);
+        tooltipsForNearbyObjects.Remove(parentObj);
 
         // Initialize rotation for picked up object
         objectToRotAngle[parentObj] = 0;
