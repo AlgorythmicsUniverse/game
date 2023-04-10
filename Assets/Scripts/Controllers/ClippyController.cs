@@ -32,20 +32,7 @@ public class ClippyController : MonoBehaviour
     }
 
     void Update() {
-        // Update each picked up game object.
-        foreach (GameObject obj in pickedUp) {
-            float actualTheta = objectToRotAngle[obj] + (orbitDegreesPerSec * Time.deltaTime);
-            objectToRotAngle[obj] = actualTheta;
-
-            float theta = actualTheta * Mathf.Deg2Rad;
-
-            Vector3 center = transform.position;
-            float x = Mathf.Cos(theta) * orbitDistance + center.x;
-            float y = center.y + characterHeight + (Mathf.Sin(theta) * bobUpAndDownMultiplier);
-            float z = Mathf.Sin(theta) * orbitDistance + center.z;
-
-            obj.transform.position = new Vector3(x, y, z);
-        }
+        rotatePickedup();
     }
 
     void OnTriggerEnter(Collider other) {
@@ -84,6 +71,23 @@ public class ClippyController : MonoBehaviour
         // Disable the collider of this object's hitbox, since we have picked it up.
         Collider collider = obj.GetComponent<Collider>();
         collider.enabled = false;
+    }
+
+    void rotatePickedup() {
+        // Rotate picked up items around Clippy
+        foreach (GameObject obj in pickedUp) {
+            float actualTheta = objectToRotAngle[obj] + (orbitDegreesPerSec * Time.deltaTime);
+            objectToRotAngle[obj] = actualTheta;
+
+            float theta = actualTheta * Mathf.Deg2Rad;
+
+            Vector3 center = transform.position;
+            float x = Mathf.Cos(theta) * orbitDistance + center.x;
+            float y = center.y + characterHeight + (Mathf.Sin(theta) * bobUpAndDownMultiplier);
+            float z = Mathf.Sin(theta) * orbitDistance + center.z;
+
+            obj.transform.position = new Vector3(x, y, z);
+        }
     }
 
     void evenlyDividePickedup() {
