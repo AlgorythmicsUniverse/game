@@ -52,6 +52,8 @@ MonoBehaviour:
   floatFrequency: 1
   floatAmplitude: 0.2
   Object: {fileID: 0}
+  rotatingEnabled: 1
+  rotationSpeed: 30
 --- !u!1 &6223036247938994128
 GameObject:
   m_ObjectHideFlags: 0
