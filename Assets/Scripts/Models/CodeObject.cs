@@ -14,9 +14,11 @@ public class CodeObject : MonoBehaviour
     public GameObject Object;
 
     private float tempY;
+    private float randOffset;
 
     void Start() {
         tempY = Object.transform.position.y;
+        randOffset = Random.Range(0, 180);
     }
 
     void Update() {
@@ -27,7 +29,7 @@ public class CodeObject : MonoBehaviour
 
     void floatObject() {
         Vector3 tempPos = Object.transform.position;
-        tempPos.y = tempY + Mathf.Sin(Time.fixedTime * floatFrequency) * floatAmplitude;
+        tempPos.y = tempY + Mathf.Sin(Time.fixedTime * floatFrequency + randOffset) * floatAmplitude;
 
         Object.transform.position = tempPos;
     }
