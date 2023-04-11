@@ -62,7 +62,7 @@ public class ClippyController : MonoBehaviour
 
             Vector3 center = transform.position;
             float x = Mathf.Cos(theta) * orbitDistance + center.x;
-            float y = center.y + characterHeight + (Mathf.Sin(theta) * bobUpAndDownMultiplier);
+            float y = center.y + characterHeight;
             float z = Mathf.Sin(theta) * orbitDistance + center.z;
 
             obj.transform.position = new Vector3(x, y, z);
