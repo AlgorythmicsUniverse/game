@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ClippyController : MonoBehaviour
 {
@@ -19,13 +20,13 @@ public class ClippyController : MonoBehaviour
     public float orbitDegreesPerSec = 90.0f;
 
     [SerializeField]
-    public float bobUpAndDownMultiplier = 0.25f;
-
-    [SerializeField]
-    public float characterHeight = 1.0f;
+    public float orbitHeight = 1.0f;
 
     [SerializeField]
     public float minimumObjectDistance = 5.0f;
+
+    [SerializeField]
+    public GameObject GameUI;
 
     [SerializeField]
     public GameObject CodeblockTooltip;
@@ -40,7 +41,9 @@ public class ClippyController : MonoBehaviour
         tooltipsForNearbyObjects = new Dictionary<GameObject, GameObject>();
     }
 
-    void Update() {}
+    void Update() {
+        updateUi();
+    }
 
     void FixedUpdate() {
         rotatePickedup();
@@ -50,6 +53,11 @@ public class ClippyController : MonoBehaviour
 
     void OnTriggerEnter(Collider other) {
         handleCodeblockTrigger(other);
+    }
+    
+    void updateUi() {
+        GameObject itemNameText = GameUI.transform.Find("PickedupInfo").gameObject;
+        itemNameText.GetComponent<TMP_Text>().text = string.Format("{0}/{1} picked up", pickedUp.Count, maximumObjectPickUp);
     }
 
     void rotatePickedup() {
@@ -62,7 +70,7 @@ public class ClippyController : MonoBehaviour
 
             Vector3 center = transform.position;
             float x = Mathf.Cos(theta) * orbitDistance + center.x;
-            float y = center.y + characterHeight;
+            float y = center.y + orbitHeight;
             float z = Mathf.Sin(theta) * orbitDistance + center.z;
 
             obj.transform.position = new Vector3(x, y, z);
