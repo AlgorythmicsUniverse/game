@@ -1121,7 +1121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Addition
   Type: 0
-  Description: 
+  Description: Used to add together two values
 --- !u!1001 &1402827283
 PrefabInstance:
   m_ObjectHideFlags: 0
