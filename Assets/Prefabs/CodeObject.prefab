@@ -48,6 +48,10 @@ MonoBehaviour:
   Name: 
   Type: 0
   Description: 
+  floatingEnabled: 1
+  floatFrequency: 1
+  floatAmplitude: 0.2
+  Object: {fileID: 0}
 --- !u!1 &6223036247938994128
 GameObject:
   m_ObjectHideFlags: 0
