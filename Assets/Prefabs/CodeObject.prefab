@@ -45,9 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9080dadfccb4f194d8b069c307b00dc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Addition
-  Type: 1
-  Description: Used to add together two values
+  Name: 
+  Type: 0
+  Description: 
 --- !u!1 &6223036247938994128
 GameObject:
   m_ObjectHideFlags: 0
