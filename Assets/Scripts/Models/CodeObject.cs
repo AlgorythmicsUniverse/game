@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CodeBlock : MonoBehaviour
+public class CodeObject : MonoBehaviour
 {
     public string Name;
-    public CodeBlockTypes Type;
+    public CodeObjectType Type;
     public string Description;
 
     public bool floatingEnabled = true;

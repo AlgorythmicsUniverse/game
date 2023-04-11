@@ -144,7 +144,7 @@ public class ClippyController : MonoBehaviour
         pickedUp.Add(parentObj);
 
         // Disable floating
-        parentObj.GetComponent<CodeBlock>().floatingEnabled = false;
+        parentObj.GetComponent<CodeObject>().floatingEnabled = false;
 
         // Remove from nearbyObjects list
         nearbyObjects.Remove(parentObj);

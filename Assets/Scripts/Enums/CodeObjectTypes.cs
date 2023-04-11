@@ -1,5 +1,5 @@
 
-public enum CodeBlockTypes {
+public enum CodeObjectType {
     None,
     Expression,
     Declaration,
