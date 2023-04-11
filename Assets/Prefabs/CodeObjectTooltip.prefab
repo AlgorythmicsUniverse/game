@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 8587481217826689221}
   - component: {fileID: 1755642872041102609}
   m_Layer: 5
-  m_Name: CodeblockTooltip
+  m_Name: CodeObjectTooltip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &1755642872041102609
 MonoBehaviour:
   m_ObjectHideFlags: 0

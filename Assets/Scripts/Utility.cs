@@ -19,7 +19,7 @@ public static class Utility {
     }
 
     public static void styleCodeblockTooltip(GameObject tooltip, GameObject obj) {
-        CodeBlock codeBlock = obj.GetComponent<CodeBlock>();
+        CodeObject codeBlock = obj.GetComponent<CodeObject>();
 
         GameObject itemNameText = tooltip.transform.Find("Panel/ItemNameText").gameObject;
         itemNameText.GetComponent<TMP_Text>().text = codeBlock.Name;
@@ -34,15 +34,15 @@ public static class Utility {
         Color32 panelBackgroundColor = new Color32(125, 125, 125, 255);
         Color32 topPanelBackgroundColor = new Color32(93, 93, 93, 255);
         switch (codeBlock.Type) {
-            case CodeBlockTypes.Declaration:
+            case CodeObjectType.Declaration:
                 panelBackgroundColor = new Color32(76, 191, 254, 255);
                 topPanelBackgroundColor = new Color32(8, 158, 255, 255);
                 break;
-            case CodeBlockTypes.ControlFlow:
+            case CodeObjectType.ControlFlow:
                 panelBackgroundColor = new Color32(255, 160, 61, 255);
                 topPanelBackgroundColor = new Color32(255, 144, 28, 255);
                 break;
-            case CodeBlockTypes.Expression:
+            case CodeObjectType.Expression:
                 panelBackgroundColor = new Color32(27, 255, 130, 255);
                 topPanelBackgroundColor = new Color32(7, 217, 102, 255);
                 break;
