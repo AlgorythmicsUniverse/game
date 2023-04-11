@@ -140,8 +140,11 @@ public class ClippyController : MonoBehaviour
             return;
         }
 
-        // Pick the object up.
+        // Pick the object up
         pickedUp.Add(parentObj);
+
+        // Disable floating
+        parentObj.GetComponent<CodeBlock>().floatingEnabled = false;
 
         // Remove from nearbyObjects list
         nearbyObjects.Remove(parentObj);
