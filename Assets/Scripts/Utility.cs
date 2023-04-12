@@ -104,4 +104,26 @@ public static class Utility {
             obj.transform.rotation = rotation;
         }
     }
+
+    public static IEnumerator moveOverSpeed(GameObject obj, Vector3 target, float speed, float delay=0) {
+        yield return new WaitForSeconds(delay);
+
+        while (obj.transform.position != target) {
+            obj.transform.position = Vector3.MoveTowards(obj.transform.position, target, speed * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    public static IEnumerator moveOverSeconds(GameObject obj, Vector3 target, float seconds, float delay=0) {
+        yield return new WaitForSeconds(delay);
+        
+        float elapsedTime = 0;
+        Vector3 startingPos = obj.transform.position;
+        while (elapsedTime < seconds) {
+            elapsedTime += Time.deltaTime;
+            obj.transform.position = Vector3.Lerp(startingPos, target, (elapsedTime / seconds));
+            yield return new WaitForEndOfFrame();
+        }
+
+    }
 }
