@@ -5,8 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - CinemachineTarget
-  - CodeBlock
   - Hitbox
+  - Extraction
+  - CodeObject
   layers:
   - Default
   - TransparentFX

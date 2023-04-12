@@ -16,6 +16,8 @@ public class CodeObject : MonoBehaviour
     public bool rotatingEnabled = true;
     public float rotationSpeed = 30.0f;
 
+    public bool disabled = false;
+
     private float randOffset;
 
     void Start() {
@@ -23,11 +25,13 @@ public class CodeObject : MonoBehaviour
     }
 
     void Update() {
-        if (floatingEnabled) {
-            floatObject();
-        }
-        if (rotatingEnabled) {
-            rotateObject();
+        if (!disabled) {
+            if (floatingEnabled) {
+                floatObject();
+            }
+            if (rotatingEnabled) {
+                rotateObject();
+            }
         }
     }
 
