@@ -9,6 +9,8 @@ public class ClippyController : MonoBehaviour
     private Dictionary<GameObject, float> objectToRotAngle;
     private List<GameObject> nearbyObjects;
     private Dictionary<GameObject, GameObject> tooltipsForNearbyObjects;
+    private List<GameObject> nearbyInteractables;
+    private Dictionary<GameObject, GameObject> tooltipsForInteractableObjects;
 
     [SerializeField]
     public int maximumObjectPickUp = 3;
@@ -29,7 +31,10 @@ public class ClippyController : MonoBehaviour
     public GameObject GameUI;
 
     [SerializeField]
-    public GameObject CodeblockTooltip;
+    public GameObject CodeObjectTooltip;
+
+    [SerializeField]
+    public GameObject InteractableTooltip;
 
     [SerializeField]
     public float tooltipAltitude = 1.0f;
@@ -39,6 +44,8 @@ public class ClippyController : MonoBehaviour
         objectToRotAngle = new Dictionary<GameObject, float>();
         nearbyObjects = new List<GameObject>();
         tooltipsForNearbyObjects = new Dictionary<GameObject, GameObject>();
+        nearbyInteractables = new List<GameObject>();
+        tooltipsForInteractableObjects = new Dictionary<GameObject, GameObject>();
     }
 
     void Update() {
@@ -48,11 +55,14 @@ public class ClippyController : MonoBehaviour
     void FixedUpdate() {
         rotatePickedup();
         storeNearbyObjects();
-        pointTooltipsTowardsPlayer();
+        Utility.pointObjectsTowardsPlayer(transform.position, tooltipsForNearbyObjects.Values.ToArray());
+        storeNearbyInteractableObjects();
+        Utility.pointObjectsTowardsPlayer(transform.position, tooltipsForInteractableObjects.Values.ToArray());
     }
 
     void OnTriggerEnter(Collider other) {
-        handleCodeblockTrigger(other);
+        handleCodeObjectTrigger(other);
+    }
     }
     
     void updateUi() {
@@ -76,30 +86,20 @@ public class ClippyController : MonoBehaviour
             obj.transform.position = new Vector3(x, y, z);
         }
     }
-
-    void pointTooltipsTowardsPlayer() {
-        foreach (GameObject obj in tooltipsForNearbyObjects.Values) {
-            var lookPos = obj.transform.position - transform.position;
-            lookPos.y = 0;
-
-            var rotation = Quaternion.LookRotation(lookPos);
-            obj.transform.rotation = rotation;
-        }
-    }
     
     void storeNearbyObjects() {
         // Store nearby objects in local list to prevent multiple triggering
-        List<GameObject> objects = new List<GameObject>(Utility.getNearbyObjectsWithTag(transform.position, "CodeBlock", minimumObjectDistance));
+        List<GameObject> objects = new List<GameObject>(Utility.getNearbyObjectsWithTag(transform.position, "CodeObject", minimumObjectDistance));
         foreach (GameObject obj in objects) {
-            if (!pickedUp.Contains(obj) && !nearbyObjects.Contains(obj)) {
+            if (!obj.GetComponent<CodeObject>().disabled && !pickedUp.Contains(obj) && !nearbyObjects.Contains(obj)) {
                 nearbyObjects.Add(obj);
 
                 // Create tooltip for object
-                GameObject tooltip = Instantiate(CodeblockTooltip, obj.transform.position + new Vector3(0, tooltipAltitude, 0), Quaternion.identity);
+                GameObject tooltip = Instantiate(CodeObjectTooltip, obj.transform.position + new Vector3(0, tooltipAltitude, 0), Quaternion.identity);
                 tooltip.transform.SetParent(obj.transform);
                 tooltipsForNearbyObjects[obj] = tooltip;
 
-                Utility.styleCodeblockTooltip(tooltip, obj);
+                Utility.styleCodeObjectTooltip(tooltip, obj);
             }
         }
 
@@ -114,6 +114,35 @@ public class ClippyController : MonoBehaviour
         }
     }
 
+    void storeNearbyInteractableObjects() {
+        // Store nearby interactables in local list to prevent multiple triggering
+        List<GameObject> objects = new List<GameObject>(Utility.getNearbyInteractables(transform.position, minimumObjectDistance));
+        foreach (GameObject obj in objects) {
+            if (!nearbyInteractables.Contains(obj)) {
+                nearbyInteractables.Add(obj);
+
+                // Create tooltip for interactable
+                GameObject tooltip = Instantiate(InteractableTooltip, obj.transform.position + new Vector3(0, tooltipAltitude, 0), Quaternion.identity);
+                tooltip.transform.SetParent(obj.transform);
+                tooltipsForInteractableObjects[obj] = tooltip;
+
+                string key = obj.GetComponent<Interactable>().Key;
+
+                Utility.styleInteractableTooltip(tooltip, key);
+            }
+        }
+
+        // Remove objects no longer nearby
+        foreach (GameObject obj in nearbyInteractables.ToArray()) {
+            if (!objects.Contains(obj)) {
+                nearbyInteractables.Remove(obj);
+
+                Destroy(tooltipsForInteractableObjects[obj]);
+                tooltipsForInteractableObjects.Remove(obj);
+            }
+        }
+    }
+
     void evenlyDividePickedup() {
         float step = 360f / pickedUp.Count;
         int i = 0;
@@ -123,7 +152,7 @@ public class ClippyController : MonoBehaviour
         }
     }
 
-    void handleCodeblockTrigger(Collider other) {
+    void handleCodeObjectTrigger(Collider other) {
         GameObject obj = other.gameObject;
 
         if (!obj.CompareTag("Hitbox")) {

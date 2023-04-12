@@ -5,12 +5,12 @@ using UnityEngine.UI;
 using TMPro;
 
 public static class Utility {
-    public static GameObject[] getNearbyObjectsWithTag(Vector3 source, string tag, float minimumDistance) {
+    public static GameObject[] getNearbyObjectsWithTag(Vector3 center, string tag, float minimumDistance) {
         GameObject[] objects = GameObject.FindGameObjectsWithTag(tag);
 
         List<GameObject> nearbyObjects = new List<GameObject>();
         foreach (GameObject obj in objects) {
-            if (Vector3.Distance(source, obj.transform.position) <= minimumDistance) {
+            if (Vector3.Distance(center, obj.transform.position) <= minimumDistance) {
                 nearbyObjects.Add(obj);
             }
         }
@@ -18,14 +18,44 @@ public static class Utility {
         return nearbyObjects.ToArray();
     }
 
-    public static void styleCodeblockTooltip(GameObject tooltip, GameObject obj) {
-        CodeObject codeBlock = obj.GetComponent<CodeObject>();
+    public static GameObject[] getNearbyInteractables(Vector3 center, float minimumDistance) {
+        Interactable[] interactables = GameObject.FindObjectsOfType<Interactable>();
+
+        List<GameObject> objects = new List<GameObject>();
+        foreach (Interactable interactable in interactables) {
+            if (interactable.Enabled) {
+                GameObject obj = interactable.gameObject;
+                if (Vector3.Distance(center, obj.transform.position) <= minimumDistance) {
+                    objects.Add(obj);
+                }
+            }
+        }
+
+        return objects.ToArray();
+    }
+
+    public static GameObject getClosestObject(Vector3 center, GameObject[] objects) {
+        GameObject closest = null;
+        if (objects.Length > 0) {
+            closest = objects[0];
+        }
+        foreach (GameObject obj in objects) {
+            if (Vector3.Distance(center, obj.transform.position) < Vector3.Distance(center, closest.transform.position)) {
+                closest = obj;
+            }
+        }
+
+        return closest;
+    }
+
+    public static void styleCodeObjectTooltip(GameObject tooltip, GameObject obj) {
+        CodeObject codeObject = obj.GetComponent<CodeObject>();
 
         GameObject itemNameText = tooltip.transform.Find("Panel/ItemNameText").gameObject;
-        itemNameText.GetComponent<TMP_Text>().text = codeBlock.Name;
+        itemNameText.GetComponent<TMP_Text>().text = codeObject.Name;
         
         GameObject itemDescriptionText = tooltip.transform.Find("Panel/ItemDescriptionText").gameObject;
-        string descriptionText = codeBlock.Description;
+        string descriptionText = codeObject.Description;
         if (descriptionText.Length == 0) {
             descriptionText = "No description";
         }
@@ -33,7 +63,7 @@ public static class Utility {
 
         Color32 panelBackgroundColor = new Color32(125, 125, 125, 255);
         Color32 topPanelBackgroundColor = new Color32(93, 93, 93, 255);
-        switch (codeBlock.Type) {
+        switch (codeObject.Type) {
             case CodeObjectType.Declaration:
                 panelBackgroundColor = new Color32(76, 191, 254, 255);
                 topPanelBackgroundColor = new Color32(8, 158, 255, 255);
@@ -55,5 +85,23 @@ public static class Utility {
 
         GameObject topPanel = tooltip.transform.Find("Panel/ItemNamePanel").gameObject;
         topPanel.GetComponent<Image>().color = topPanelBackgroundColor;
+    }
+    
+    public static void styleInteractableTooltip(GameObject tooltip, string key) {
+        Texture2D texture = Resources.Load<Texture2D>("KeyTextures/" + key);
+        
+
+        GameObject keyImage = tooltip.transform.Find("KeyImage").gameObject;
+        keyImage.GetComponent<RawImage>().texture = texture;
+    }
+
+    public static void pointObjectsTowardsPlayer(Vector3 target, GameObject[] objects) {
+        foreach (GameObject obj in objects) {
+            var lookPos = obj.transform.position - target;
+            lookPos.y = 0;
+
+            var rotation = Quaternion.LookRotation(lookPos);
+            obj.transform.rotation = rotation;
+        }
     }
 }
