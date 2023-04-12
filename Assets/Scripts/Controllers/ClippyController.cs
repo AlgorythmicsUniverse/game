@@ -162,8 +162,13 @@ public class ClippyController : MonoBehaviour
 
         GameObject parentObj = obj.transform.parent.gameObject;
 
-        if (!parentObj.CompareTag("CodeBlock")) {
-            // Is not a CodeBlock
+        if (!parentObj.CompareTag("CodeObject")) {
+            // Is not a CodeObject
+            return;
+        }
+
+        if (parentObj.GetComponent<CodeObject>().disabled) {
+            // CodeObject is disabled
             return;
         }
 
