@@ -1,6 +1,8 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class ClippyController : MonoBehaviour
@@ -63,6 +65,34 @@ public class ClippyController : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         handleCodeObjectTrigger(other);
     }
+
+    void OnInteract(InputValue value) {
+        if (nearbyInteractables.Count > 0) {
+            GameObject interactable = Utility.getClosestObject(transform.position, nearbyInteractables.ToArray());
+
+            if (interactable.tag == "Extraction") {
+                extractPickedup(interactable.transform.Find("ExtractPoint").position);
+            }
+        }
+    }
+
+    void extractPickedup(Vector3 target) {
+        float delay = 0;
+        foreach (GameObject obj in pickedUp.ToArray()) {
+            StartCoroutine(extractCodeObject(obj, target, delay));
+            delay += 1f;
+        }
+    }
+
+    IEnumerator extractCodeObject(GameObject obj, Vector3 target, float delay) {
+        yield return new WaitForSeconds(delay);
+
+        GameObject temp = obj;
+        pickedUp.Remove(obj);
+
+        temp.GetComponent<CodeObject>().disabled = true;
+        yield return StartCoroutine(Utility.moveOverSeconds(obj, target, 1f));
+        Destroy(temp);
     }
     
     void updateUi() {
