@@ -41,6 +41,11 @@ public class ClippyController : MonoBehaviour
     [SerializeField]
     public float tooltipAltitude = 1.0f;
 
+    public float fallingHeight = 0.0f;
+
+    private Vector3 lastValidPosition;
+    private Quaternion lastValidRotation;
+
     void Start() {
         pickedUp = new List<GameObject>();
         objectToRotAngle = new Dictionary<GameObject, float>();
@@ -55,6 +60,8 @@ public class ClippyController : MonoBehaviour
     }
 
     void FixedUpdate() {
+        handleFallingOff();
+
         rotatePickedup();
         storeNearbyObjects();
         Utility.pointObjectsTowardsPlayer(transform.position, tooltipsForNearbyObjects.Values.ToArray());
@@ -74,6 +81,28 @@ public class ClippyController : MonoBehaviour
                 extractPickedup(interactable.transform.Find("ExtractPoint").position);
             }
         }
+    }
+
+    void handleFallingOff() {
+        if (transform.GetComponent<StarterAssets.ThirdPersonController>().Grounded) {
+            lastValidPosition = transform.position;
+            lastValidRotation = transform.rotation;
+        }
+
+        if (isPlayerFallingOff()) {
+            // If player is falling out of world, teleport back to last valid position
+            Vector3 rot = lastValidRotation.eulerAngles;
+            rot = new Vector3(rot.x, rot.y + 180, rot.z);
+            Quaternion rotation = Quaternion.Euler(rot);
+
+            transform.SetPositionAndRotation(lastValidPosition, rotation);
+
+            transform.position += transform.forward * 1;
+        }
+    }
+
+    bool isPlayerFallingOff() {
+        return transform.position.y < fallingHeight;
     }
 
     void extractPickedup(Vector3 target) {
