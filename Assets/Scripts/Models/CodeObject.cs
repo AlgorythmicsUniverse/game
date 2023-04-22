@@ -6,6 +6,7 @@ public class CodeObject : MonoBehaviour
 {
     public string Name;
     public CodeObjectType Type;
+    [TextArea]
     public string Description;
 
     public bool floatingEnabled = true;
