@@ -99,17 +99,23 @@ public static class Utility {
             playAudioButton.SetActive(false);
         }
         
+        ExampleGuide exampleGuide = obj.GetComponent<ExampleGuide>();
         GameObject displayExampleButton = tooltip.transform.Find("Panel/DisplayExampleButton").gameObject;
-        if (codeObject.codeExample.Length != 0) {
+        if (exampleGuide != null) {
             displayExampleButton.SetActive(true);
             displayExampleButton.GetComponent<Button>().onClick.AddListener(
                 delegate {
-                    codeObject.displayExample();
+                    exampleGuide.displayExample();
                 }
             );
         } else {
             displayExampleButton.SetActive(false);
         }
+    }
+
+    public static void setupExamplePopup(GameObject popup, string code) {
+        GameObject codeText = popup.transform.Find("Panel/CodeArea/CodeText").gameObject;
+        codeText.GetComponent<TMP_Text>().SetText(code);
     }
     
     public static void setupInteractableTooltip(GameObject tooltip, string key) {

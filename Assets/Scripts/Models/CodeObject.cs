@@ -6,8 +6,8 @@ public class CodeObject : MonoBehaviour
 {
     public string Name;
     public CodeObjectType Type;
+    [TextArea]
     public string Description;
-    public string codeExample;
 
     public bool floatingEnabled = true;
     public float floatFrequency = 1f;
@@ -46,9 +46,5 @@ public class CodeObject : MonoBehaviour
     
     void rotateObject() {
         Object.transform.Rotate(Vector3.up * (rotationSpeed * Time.deltaTime));
-    }
-
-    public void displayExample() {
-        Debug.Log("Display example");
     }
 }
