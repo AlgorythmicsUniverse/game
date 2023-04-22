@@ -102,7 +102,7 @@ public static class Utility {
         keyImage.GetComponent<RawImage>().texture = texture;
     }
 
-    public static void pointObjectsTowardsPlayer(Vector3 target, GameObject[] objects) {
+    public static void pointObjectsTowardsTarget(Vector3 target, GameObject[] objects) {
         foreach (GameObject obj in objects) {
             var lookPos = obj.transform.position - target;
             lookPos.y = 0;
@@ -110,6 +110,11 @@ public static class Utility {
             var rotation = Quaternion.LookRotation(lookPos);
             obj.transform.rotation = rotation;
         }
+    }
+
+    public static void pointObjectsTowardsCamera(GameObject[] objects) {
+        Vector3 target = Camera.main.transform.position;
+        pointObjectsTowardsTarget(target, objects);
     }
 
     public static IEnumerator moveOverSpeed(GameObject obj, Vector3 target, float speed, float delay=0) {
