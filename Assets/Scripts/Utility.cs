@@ -85,6 +85,13 @@ public static class Utility {
 
         GameObject topPanel = tooltip.transform.Find("Panel/ItemNamePanel").gameObject;
         topPanel.GetComponent<Image>().color = topPanelBackgroundColor;
+
+        AudioGuide audioGuide = obj.GetComponent<AudioGuide>();
+        GameObject playAudioButton = tooltip.transform.Find("Panel/PlayAudioButton").gameObject;
+        playAudioButton.SetActive(audioGuide != null);
+        
+        GameObject displayExampleButton = tooltip.transform.Find("Panel/DisplayExampleButton").gameObject;
+        displayExampleButton.SetActive(codeObject.codeExample.Length != 0);
     }
     
     public static void setupInteractableTooltip(GameObject tooltip, string key) {
