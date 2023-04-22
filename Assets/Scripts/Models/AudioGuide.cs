@@ -5,11 +5,10 @@ using UnityEngine;
 public class AudioGuide : MonoBehaviour {
 
     public AudioClip audioClip;
-    private AudioController audioController;
 
     public void playAudio() {
         if (audioClip != null) {
-            audioController.play(audioClip);
+            AudioController.Instance.play(audioClip);
         }
     }
 }
