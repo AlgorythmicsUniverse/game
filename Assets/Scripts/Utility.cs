@@ -48,7 +48,7 @@ public static class Utility {
         return closest;
     }
 
-    public static void styleCodeObjectTooltip(GameObject tooltip, GameObject obj) {
+    public static void setupCodeObjectTooltip(GameObject tooltip, GameObject obj) {
         CodeObject codeObject = obj.GetComponent<CodeObject>();
 
         GameObject itemNameText = tooltip.transform.Find("Panel/ItemNameText").gameObject;
@@ -85,9 +85,40 @@ public static class Utility {
 
         GameObject topPanel = tooltip.transform.Find("Panel/ItemNamePanel").gameObject;
         topPanel.GetComponent<Image>().color = topPanelBackgroundColor;
+
+        AudioGuide audioGuide = obj.GetComponent<AudioGuide>();
+        GameObject playAudioButton = tooltip.transform.Find("Panel/PlayAudioButton").gameObject;
+        if (audioGuide != null) {
+            playAudioButton.SetActive(true);
+            playAudioButton.GetComponent<Button>().onClick.AddListener(
+                delegate {
+                    audioGuide.playAudio();
+                }
+            );
+        } else {
+            playAudioButton.SetActive(false);
+        }
+        
+        ExampleGuide exampleGuide = obj.GetComponent<ExampleGuide>();
+        GameObject displayExampleButton = tooltip.transform.Find("Panel/DisplayExampleButton").gameObject;
+        if (exampleGuide != null) {
+            displayExampleButton.SetActive(true);
+            displayExampleButton.GetComponent<Button>().onClick.AddListener(
+                delegate {
+                    exampleGuide.displayExample();
+                }
+            );
+        } else {
+            displayExampleButton.SetActive(false);
+        }
+    }
+
+    public static void setupExamplePopup(GameObject popup, string code) {
+        GameObject codeText = popup.transform.Find("Panel/CodeArea/CodeText").gameObject;
+        codeText.GetComponent<TMP_Text>().SetText(code);
     }
     
-    public static void styleInteractableTooltip(GameObject tooltip, string key) {
+    public static void setupInteractableTooltip(GameObject tooltip, string key) {
         Texture2D texture = Resources.Load<Texture2D>("KeyTextures/" + key);
         
 
@@ -95,7 +126,7 @@ public static class Utility {
         keyImage.GetComponent<RawImage>().texture = texture;
     }
 
-    public static void pointObjectsTowardsPlayer(Vector3 target, GameObject[] objects) {
+    public static void pointObjectsTowardsTarget(Vector3 target, GameObject[] objects) {
         foreach (GameObject obj in objects) {
             var lookPos = obj.transform.position - target;
             lookPos.y = 0;
@@ -103,6 +134,11 @@ public static class Utility {
             var rotation = Quaternion.LookRotation(lookPos);
             obj.transform.rotation = rotation;
         }
+    }
+
+    public static void pointObjectsTowardsCamera(GameObject[] objects) {
+        Vector3 target = Camera.main.transform.position;
+        pointObjectsTowardsTarget(target, objects);
     }
 
     public static IEnumerator moveOverSpeed(GameObject obj, Vector3 target, float speed, float delay=0) {

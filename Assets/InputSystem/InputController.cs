@@ -43,6 +43,11 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
+
+		public void OnUnlockCamera(InputValue value) {
+			UnlockCameraInput(!value.isPressed);
+			LookInput(new Vector2());
+		}
 #endif
 
 
@@ -64,6 +69,11 @@ namespace StarterAssets
 		public void SprintInput(bool newSprintState)
 		{
 			sprint = newSprintState;
+		}
+
+		public void UnlockCameraInput(bool cameraState) {
+			cursorLocked = cursorInputForLook = cameraState;
+			SetCursorState(cameraState);
 		}
 
 		private void OnApplicationFocus(bool hasFocus)
