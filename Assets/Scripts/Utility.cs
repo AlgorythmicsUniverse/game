@@ -88,10 +88,28 @@ public static class Utility {
 
         AudioGuide audioGuide = obj.GetComponent<AudioGuide>();
         GameObject playAudioButton = tooltip.transform.Find("Panel/PlayAudioButton").gameObject;
-        playAudioButton.SetActive(audioGuide != null);
+        if (audioGuide != null) {
+            playAudioButton.SetActive(true);
+            playAudioButton.GetComponent<Button>().onClick.AddListener(
+                delegate {
+                    audioGuide.playAudio();
+                }
+            );
+        } else {
+            playAudioButton.SetActive(false);
+        }
         
         GameObject displayExampleButton = tooltip.transform.Find("Panel/DisplayExampleButton").gameObject;
-        displayExampleButton.SetActive(codeObject.codeExample.Length != 0);
+        if (codeObject.codeExample.Length != 0) {
+            displayExampleButton.SetActive(true);
+            displayExampleButton.GetComponent<Button>().onClick.AddListener(
+                delegate {
+                    codeObject.displayExample();
+                }
+            );
+        } else {
+            displayExampleButton.SetActive(false);
+        }
     }
     
     public static void setupInteractableTooltip(GameObject tooltip, string key) {
