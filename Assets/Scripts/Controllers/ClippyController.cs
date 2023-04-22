@@ -158,7 +158,7 @@ public class ClippyController : MonoBehaviour
                 tooltip.transform.SetParent(obj.transform);
                 tooltipsForNearbyObjects[obj] = tooltip;
 
-                Utility.styleCodeObjectTooltip(tooltip, obj);
+                Utility.setupCodeObjectTooltip(tooltip, obj);
             }
         }
 
@@ -187,7 +187,7 @@ public class ClippyController : MonoBehaviour
 
                 string key = obj.GetComponent<Interactable>().Key;
 
-                Utility.styleInteractableTooltip(tooltip, key);
+                Utility.setupInteractableTooltip(tooltip, key);
             }
         }
 

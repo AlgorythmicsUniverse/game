@@ -48,7 +48,7 @@ public static class Utility {
         return closest;
     }
 
-    public static void styleCodeObjectTooltip(GameObject tooltip, GameObject obj) {
+    public static void setupCodeObjectTooltip(GameObject tooltip, GameObject obj) {
         CodeObject codeObject = obj.GetComponent<CodeObject>();
 
         GameObject itemNameText = tooltip.transform.Find("Panel/ItemNameText").gameObject;
@@ -87,7 +87,7 @@ public static class Utility {
         topPanel.GetComponent<Image>().color = topPanelBackgroundColor;
     }
     
-    public static void styleInteractableTooltip(GameObject tooltip, string key) {
+    public static void setupInteractableTooltip(GameObject tooltip, string key) {
         Texture2D texture = Resources.Load<Texture2D>("KeyTextures/" + key);
         
 
