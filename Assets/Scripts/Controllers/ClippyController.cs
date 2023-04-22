@@ -64,9 +64,9 @@ public class ClippyController : MonoBehaviour
 
         rotatePickedup();
         storeNearbyObjects();
-        Utility.pointObjectsTowardsPlayer(transform.position, tooltipsForNearbyObjects.Values.ToArray());
+        Utility.pointObjectsTowardsCamera(tooltipsForNearbyObjects.Values.ToArray());
         storeNearbyInteractableObjects();
-        Utility.pointObjectsTowardsPlayer(transform.position, tooltipsForInteractableObjects.Values.ToArray());
+        Utility.pointObjectsTowardsCamera(tooltipsForInteractableObjects.Values.ToArray());
     }
 
     void OnTriggerEnter(Collider other) {
