@@ -8,7 +8,8 @@ public class AudioGuide : MonoBehaviour {
     private AudioController audioController;
 
     public void playAudio() {
-        Debug.Log("play something, idk");
-        // audioController.play(audioClip);
+        if (audioClip != null) {
+            audioController.play(audioClip);
+        }
     }
 }
