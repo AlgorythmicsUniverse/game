@@ -46,6 +46,8 @@ public class ClippyController : MonoBehaviour
     private Vector3 lastValidPosition;
     private Quaternion lastValidRotation;
 
+    private Vector3 startPosition;
+
     void Start() {
         pickedUp = new List<GameObject>();
         objectToRotAngle = new Dictionary<GameObject, float>();
@@ -53,6 +55,8 @@ public class ClippyController : MonoBehaviour
         tooltipsForNearbyObjects = new Dictionary<GameObject, GameObject>();
         nearbyInteractables = new List<GameObject>();
         tooltipsForInteractableObjects = new Dictionary<GameObject, GameObject>();
+
+        startPosition = transform.position;
     }
 
     void Update() {
@@ -87,6 +91,10 @@ public class ClippyController : MonoBehaviour
         if (transform.GetComponent<StarterAssets.ThirdPersonController>().Grounded) {
             lastValidPosition = transform.position;
             lastValidRotation = transform.rotation;
+        }
+
+        if (transform.position.y < -1) {
+            transform.position = startPosition;
         }
 
         if (isPlayerFallingOff()) {
