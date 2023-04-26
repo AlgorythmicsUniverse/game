@@ -11,29 +11,13 @@ public class UI_DropdownVariableSelector : MonoBehaviour
     private Button_UI CancelButton;
     private TMP_Dropdown variableDropdown;
     private string variableType;
-    
+    private List<string> dropdownItems = new List<string>();
+
     private void Awake()
     {
         OKButton = transform.Find("OKButton").GetComponent<Button_UI>();
         CancelButton = transform.Find("CancelButton").GetComponent<Button_UI>();
         variableDropdown = transform.Find("Dropdown").GetComponent<TMP_Dropdown>();
-        
-        List<string> dropdownItems = new List<string>();
-        dropdownItems.Add("INT");
-        dropdownItems.Add("DOUBLE");
-        dropdownItems.Add("FLOAT");
-        dropdownItems.Add("STRING");
-        dropdownItems.Add("BOOLEAN");
-
-        foreach (var item in dropdownItems )
-        {
-            variableDropdown.options.Add(new TMP_Dropdown.OptionData() { text = item });
-        }
-
-        DropdownItemSelected(variableDropdown);
-        
-        variableDropdown.onValueChanged.AddListener(delegate { DropdownItemSelected(variableDropdown); });
-        
         Hide();
     }
     private void Update()
@@ -48,19 +32,30 @@ public class UI_DropdownVariableSelector : MonoBehaviour
         }
     }
     
-    public void Show(Action onCancel,Action<string> onOk)
+    public void Show(List<string> items,Action onCancel,Action<string> onOk)
     {
+        dropdownItems = items;
+        foreach (var item in dropdownItems )
+        {
+            variableDropdown.options.Add(new TMP_Dropdown.OptionData() { text = item });
+        }
+
+        DropdownItemSelected(variableDropdown);
+        
+        variableDropdown.onValueChanged.AddListener(delegate { DropdownItemSelected(variableDropdown); });
         gameObject.SetActive(true);
         transform.SetAsLastSibling();
         OKButton.ClickFunc = () =>
         {
             Hide();
             onOk(variableType);
+            UI_Blocker.Hide_Static();
         };
         CancelButton.ClickFunc = () =>
         {
             Hide();
             onCancel();
+            UI_Blocker.Hide_Static();
         };
     }
     

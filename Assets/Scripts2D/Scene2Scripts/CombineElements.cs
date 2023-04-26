@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class CombineElements : MonoBehaviour,IEndDragHandler, IBeginDragHandler, IDragHandler, IPointerDownHandler, IPointerUpHandler
 { 
@@ -21,6 +18,7 @@ public class CombineElements : MonoBehaviour,IEndDragHandler, IBeginDragHandler,
     public void OnPointerDown(PointerEventData eventData)
     {
         mouseButtonReleased = false;
+        System.Diagnostics.Debug.Assert(Camera.main != null, "Camera.main != null");
         offset = transform.position - new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y, 0f);
     }
 
@@ -35,6 +33,7 @@ public class CombineElements : MonoBehaviour,IEndDragHandler, IBeginDragHandler,
 
     public void OnDrag(PointerEventData eventData)
     {
+        System.Diagnostics.Debug.Assert(Camera.main != null, "Camera.main != null");
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = new Vector3(mousePosition.x, mousePosition.y, 0f) + offset;
     }
@@ -53,11 +52,8 @@ public class CombineElements : MonoBehaviour,IEndDragHandler, IBeginDragHandler,
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        string thisGameObjectName;
-        string collisionGameObjectName;
-
-        thisGameObjectName = gameObject.name;
-        collisionGameObjectName = collision.gameObject.name;
+        string thisGameObjectName = gameObject.name;
+        string collisionGameObjectName = collision.gameObject.name;
 
         if (mouseButtonReleased)
         {

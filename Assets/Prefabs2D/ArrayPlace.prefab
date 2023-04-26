@@ -91,7 +91,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa808baaac28504488f35da31aa4a65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  array: {fileID: 4441956648902574633, guid: cf47697c88f649e45b829543eb317dcb, type: 3}
+  parentObject: {fileID: 7959270842736668519}
+  newVariable: {fileID: 0}
 --- !u!50 &-6085335319177764450
 Rigidbody2D:
   serializedVersion: 4

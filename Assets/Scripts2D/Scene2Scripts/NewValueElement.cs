@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,11 +13,22 @@ public class NewValueElement : MonoBehaviour, IPointerDownHandler
     [SerializeField] private UI_InputWindow inputWindow;
     [SerializeField] private UI_DropdownVariableSelector dropdownVariableSelector;
     [SerializeField] private UI_ErrorPopup errorPopup;
+    List<string> dropdownItems = new List<string>();
+    
+    private void Awake()
+    {
+        dropdownItems.Add("INT");
+        dropdownItems.Add("DOUBLE");
+        dropdownItems.Add("FLOAT");
+        dropdownItems.Add("STRING");
+        dropdownItems.Add("BOOLEAN");
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         UI_Blocker.Show_Static();
         dropdownVariableSelector.Show(
+            dropdownItems,
             () =>
             {
                 Debug.Log("Cancel!");
@@ -49,7 +61,7 @@ public class NewValueElement : MonoBehaviour, IPointerDownHandler
             case "STRING":
                 validCharacters = "qwertyuiopasdfghjklzxcvbnm0123456789.!?";
                 break;
-            case "BOOL":
+            case "BOOLEAN":
                 validCharacters = "01";
                 break;
         }
@@ -83,7 +95,7 @@ public class NewValueElement : MonoBehaviour, IPointerDownHandler
                 Debug.Log("OK! + " + inputText);
                 if (inputText == "")
                 {
-                    errorPopup.Show("No value given, element could not been created!");
+                    errorPopup.Show("No value given, element could not've been created!");
                 }
                 else
                 {

@@ -17,7 +17,6 @@ public class ItemSlot : MonoBehaviour, IDropHandler
 {
 
     [SerializeField] private RectTransform parentObject;
-    [SerializeField] private NewVariable newVariable;
     private string savedVariableName;
     private string savedValue;
     private TYPE savedValueType;
@@ -27,7 +26,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler
         Debug.Log("OnDrop");
         if (eventData.pointerDrag != null)
         {
-            eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = parentObject.anchoredPosition + GetComponent<RectTransform>().anchoredPosition;
+            eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
             if (draggedObject.transform.Find("Name"))
             {
                 savedVariableName = draggedObject.transform.Find("Name").GetComponent<TMP_Text>().text;
