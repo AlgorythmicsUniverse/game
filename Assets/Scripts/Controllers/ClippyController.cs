@@ -78,11 +78,13 @@ public class ClippyController : MonoBehaviour
     }
 
     void OnInteract(InputValue value) {
-        if (nearbyInteractables.Count > 0) {
-            GameObject interactable = Utility.getClosestObject(transform.position, nearbyInteractables.ToArray());
+        if (GameController.Instance.GetIs3D()) {
+            if (nearbyInteractables.Count > 0) {
+                GameObject interactable = Utility.getClosestObject(transform.position, nearbyInteractables.ToArray());
 
-            if (interactable.tag == "Extraction") {
-                extractPickedup(interactable.transform.Find("ExtractPoint").position);
+                if (interactable.tag == "Extraction") {
+                    extractPickedup(interactable.transform.Find("ExtractPoint").position);
+                }
             }
         }
     }

@@ -45,8 +45,15 @@ namespace StarterAssets
 		}
 
 		public void OnUnlockCamera(InputValue value) {
-			UnlockCameraInput(!value.isPressed);
-			LookInput(new Vector2());
+			if (GameController.Instance.GetIs3D()) {
+				UnlockCameraInput(!value.isPressed);
+				LookInput(new Vector2());
+			}
+		}
+
+		public void OnSwitchMode(InputValue value) {
+			GameController.Instance.switchMode();
+			UnlockCameraInput(false);
 		}
 #endif
 
