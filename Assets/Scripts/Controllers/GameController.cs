@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour
     public static GameController Instance = null;
 
     public Camera MainCamera;
+    public Canvas GameUI;
     private bool Is3D = true;
 
     void Awake() {
@@ -36,6 +37,7 @@ public class GameController : MonoBehaviour
 
         MainCamera.orthographic = true;
         MainCamera.GetComponent<Cinemachine.CinemachineBrain>().enabled = false;
+        GameUI.enabled = false;
 
         Quaternion rotation = Quaternion.Euler(Vector3.zero);
 
@@ -47,5 +49,6 @@ public class GameController : MonoBehaviour
 
         MainCamera.orthographic = false;
         MainCamera.GetComponent<Cinemachine.CinemachineBrain>().enabled = true;
+        GameUI.enabled = true;
     }
 }

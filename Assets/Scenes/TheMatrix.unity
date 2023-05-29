@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainCamera: {fileID: 1221041500}
-  PlayerCameraRoot: {fileID: 518806375}
+  GameUI: {fileID: 1499289212}
 --- !u!4 &276088405
 Transform:
   m_ObjectHideFlags: 0
@@ -312,12 +312,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4210008462289077437, guid: eac45f7951db265408d83ab155270b01,
     type: 3}
   m_PrefabInstance: {fileID: 371667398}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &518806375 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8338988566280778634, guid: 64dce48905ffd9b4293e595fa6941544,
-    type: 3}
-  m_PrefabInstance: {fileID: 1762682258}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &542508511
 GameObject:
