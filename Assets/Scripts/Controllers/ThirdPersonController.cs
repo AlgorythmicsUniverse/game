@@ -159,12 +159,17 @@ namespace StarterAssets
 
             JumpAndGravity();
             GroundedCheck();
-            Move();
+            
+            if (GameController.Instance.GetIs3D()) {
+                Move();
+            }
         }
 
         private void LateUpdate()
         {
-            CameraRotation();
+            if (GameController.Instance.GetIs3D()) {
+                CameraRotation();
+            }
         }
 
         private void AssignAnimationIDs()
