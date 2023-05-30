@@ -130,7 +130,7 @@ public class ClippyController : MonoBehaviour
         pickedUp.Remove(obj);
 
         temp.GetComponent<CodeObject>().disabled = true;
-        yield return StartCoroutine(Utility.moveOverSeconds(obj, target, 1f));
+        yield return StartCoroutine(Utility.moveOverSeconds(obj.transform, target, 1f));
         Destroy(temp);
     }
     
