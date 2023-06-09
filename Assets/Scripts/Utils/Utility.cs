@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public static class Utility {
     public static GameObject[] getNearbyObjectsWithTag(Vector3 center, string tag, float minimumDistance) {
