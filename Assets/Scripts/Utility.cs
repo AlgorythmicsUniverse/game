@@ -141,25 +141,45 @@ public static class Utility {
         pointObjectsTowardsTarget(target, objects);
     }
 
-    public static IEnumerator moveOverSpeed(GameObject obj, Vector3 target, float speed, float delay=0) {
+    public static IEnumerator moveOverSpeed(Transform transform, Vector3 target, float speed, float delay=0) {
         yield return new WaitForSeconds(delay);
 
-        while (obj.transform.position != target) {
-            obj.transform.position = Vector3.MoveTowards(obj.transform.position, target, speed * Time.deltaTime);
+        while (transform.position != target) {
+            transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
             yield return new WaitForEndOfFrame();
         }
     }
 
-    public static IEnumerator moveOverSeconds(GameObject obj, Vector3 target, float seconds, float delay=0) {
+    public static IEnumerator moveOverSeconds(Transform transform, Vector3 target, float seconds, float delay=0) {
         yield return new WaitForSeconds(delay);
         
         float elapsedTime = 0;
-        Vector3 startingPos = obj.transform.position;
+        Vector3 startingPos = transform.position;
         while (elapsedTime < seconds) {
             elapsedTime += Time.deltaTime;
-            obj.transform.position = Vector3.Lerp(startingPos, target, (elapsedTime / seconds));
+            transform.position = Vector3.Lerp(startingPos, target, (elapsedTime / seconds));
             yield return new WaitForEndOfFrame();
         }
+    }
 
+    public static IEnumerator scaleOverSpeed(Transform transform, Vector3 target, float speed, float delay=0) {
+        yield return new WaitForSeconds(delay);
+
+        while (transform.localScale != target) {
+            transform.localScale = Vector3.MoveTowards(transform.localScale, target, speed * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    public static IEnumerator scaleOverSeconds(Transform transform, Vector3 target, float seconds, float delay=0) {
+        yield return new WaitForSeconds(delay);
+        
+        float elapsedTime = 0;
+        Vector3 startingScale = transform.localScale;
+        while (elapsedTime < seconds) {
+            elapsedTime += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(startingScale, target, (elapsedTime / seconds));
+            yield return new WaitForEndOfFrame();
+        }
     }
 }
