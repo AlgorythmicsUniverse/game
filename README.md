@@ -5,5 +5,5 @@
 Movement - WASD  
 Sprint - SHIFT  
 Interaction - E  
-Unlock mouse movement - TAB
-Switch between 2D and 3D mode - CTRL+TAB
+Unlock mouse movement - TAB  
+Switch between 2D and 3D mode - CTRL+TAB  
