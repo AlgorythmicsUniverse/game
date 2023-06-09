@@ -1,7 +1,8 @@
 
 public enum CodeObjectType {
     None,
+    ControlFlow,
+    DataType,
     Expression,
-    Declaration,
-    ControlFlow
+    Statement
 }
