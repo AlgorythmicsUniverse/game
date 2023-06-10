@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     public Camera MainCamera;
     public Canvas GameUI;
     public Canvas ScreenUI;
+
     private bool Is3D = true;
     private bool lockSwitch = false;
 
