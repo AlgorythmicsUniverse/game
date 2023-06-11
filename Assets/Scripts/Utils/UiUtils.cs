@@ -26,17 +26,21 @@ public static class UiUtils {
                 panelBackgroundColor = new Color32(255, 160, 61, 255);
                 topPanelBackgroundColor = new Color32(255, 144, 28, 255);
                 break;
+            case CodeObjectType.Class:
+                panelBackgroundColor = new Color32(95, 7, 217, 255);
+                topPanelBackgroundColor = new Color32(105, 8, 240, 255);
+                break;
             case CodeObjectType.DataType:
                 panelBackgroundColor = new Color32(76, 191, 254, 255);
                 topPanelBackgroundColor = new Color32(8, 158, 255, 255);
                 break;
-            case CodeObjectType.Expression:
+            case CodeObjectType.Feature:
+                panelBackgroundColor = new Color32(217, 38, 7, 255);
+                topPanelBackgroundColor = new Color32(230, 40, 8, 255);
+                break;
+            case CodeObjectType.Operator:
                 panelBackgroundColor = new Color32(27, 255, 130, 255);
                 topPanelBackgroundColor = new Color32(7, 217, 102, 255);
-                break;
-            case CodeObjectType.Statement:
-                panelBackgroundColor = new Color32(76, 191, 254, 255);
-                topPanelBackgroundColor = new Color32(8, 158, 255, 255);
                 break;
             default:
             break;

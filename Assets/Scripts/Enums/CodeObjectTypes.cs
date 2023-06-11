@@ -2,7 +2,8 @@
 public enum CodeObjectType {
     None,
     ControlFlow,
+    Class,
     DataType,
-    Expression,
-    Statement
+    Feature,
+    Operator
 }
