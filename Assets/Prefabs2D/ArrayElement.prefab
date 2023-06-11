@@ -104,7 +104,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c1c31d90ccccaa4ea85b0d6ce6f4db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 2779346830370407713, guid: 7b75c1f4776f9a843982921ea79c0b54, type: 3}
 --- !u!61 &-4439575414483249054
 BoxCollider2D:
   m_ObjectHideFlags: 0
