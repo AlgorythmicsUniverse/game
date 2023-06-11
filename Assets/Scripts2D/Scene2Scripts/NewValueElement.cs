@@ -43,7 +43,7 @@ public class NewValueElement : MonoBehaviour, IPointerDownHandler
 
     private void CreateNewValueElement(string variableType)
     {
-        GameObject newGameObject = null;
+        GameObject newGameObject;
         string validCharacters = "";
         string inputText = "";
         int charLimit = 5;

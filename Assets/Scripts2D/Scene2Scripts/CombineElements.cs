@@ -35,7 +35,8 @@ public class CombineElements : MonoBehaviour,IEndDragHandler, IBeginDragHandler,
     {
         System.Diagnostics.Debug.Assert(Camera.main != null, "Camera.main != null");
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector3(mousePosition.x, mousePosition.y, 0f) + offset;
+        var vector = new Vector3(mousePosition.x, mousePosition.y, 0f) + offset;
+        transform.position = vector;
     }
 
     public void OnEndDrag(PointerEventData eventData)
