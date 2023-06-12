@@ -29,8 +29,10 @@ public class LevelController : MonoBehaviour
     }
 
     public void unlockChapter(string chapter) {
-        if (!this.unlockedChapters.Contains(chapter)) {
-            this.unlockedChapters.Add(chapter);
+        if (Constants.Chapters.Find(x => x.SceneName == chapter) != null) {
+            if (!this.unlockedChapters.Contains(chapter)) {
+                this.unlockedChapters.Add(chapter);
+            }
         }
     }
 

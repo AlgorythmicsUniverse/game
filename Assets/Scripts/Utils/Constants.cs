@@ -3,16 +3,22 @@ using System.Collections.Generic;
 
 public class Constants {
     
-    public static readonly Dictionary<string, string> Chapters = new Dictionary<string, string>() {
-        { "Chapter0", "The Grid"},
-        { "Chapter1", "Fundamentals"},
-        { "Chapter2", "Taking a break"},
-        { "Chapter3", "Fundamentals++"},
-        { "Chapter4", "Going outside"},
-        { "Chapter5", "Beyond borders"},
-        { "Chapter6", "Objects"},
-        { "Chapter7", "The Calculator"},
-        { "Chapter8", "Advanced features"},
-        { "Chapter9", "Algorithms"},
+    public static readonly List<Chapter> Chapters = new List<Chapter>() {
+        { new Chapter("The Grid", "Chapter0", "Chapter1") },
+        { new Chapter("Fundamentals", "Chapter1", "Chapter2") },
+        { new Chapter("Taking a break", "Chapter2", "Chapter3") },
+        { new Chapter("Fundamentals++", "Chapter3", "Chapter4") },
+        { new Chapter("Going outside", "Chapter4", "Chapter5") },
+        { new Chapter("Beyond borders", "Chapter5", "Chapter6") },
+        { new Chapter("Objects", "Chapter6", "Chapter7") },
+        { new Chapter("The Calculator", "Chapter7", "Chapter8") },
+        { new Chapter("Advanced features", "Chapter8", "Chapter9") },
+        { new Chapter("Algorithms", "Chapter9", "") },
+    };
+
+    public static readonly Dictionary<string, List<Puzzle>> Puzzles = new Dictionary<string, List<Puzzle>>() {
+        { "Chapter0", new List<Puzzle>() {
+            new Puzzle("Your very first puzzle", "You'll be solving a simple coding puzzle to get used to the interface", "Chapter0/Puzzle0")
+            }}
     };
 }
