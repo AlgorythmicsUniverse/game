@@ -12,6 +12,6 @@ public class ExampleGuide : MonoBehaviour {
     public void displayExample() {
         GameObject popup = Instantiate(CodeExamplePopup);
 
-        Utility.setupExamplePopup(popup, codeExample);
+        UiUtils.setupExamplePopup(popup, codeExample);
     }
 }
