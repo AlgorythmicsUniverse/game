@@ -39,6 +39,7 @@ namespace Scripts2D.Scene2Scripts
         {
             if (items.Count > 0)
             {
+                variableDropdown.options.Clear();
                 dropdownItems = items;
                 foreach (var item in dropdownItems )
                 {
