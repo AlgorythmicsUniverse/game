@@ -32,6 +32,22 @@ public static class Utility {
         return objects.ToArray();
     }
 
+    public static GameObject[] getNearbyGuideObjects(Vector3 center, float minimumDistance) {
+        BookGuide[] guides = GameObject.FindObjectsOfType<BookGuide>();
+
+        List<GameObject> objects = new List<GameObject>();
+        foreach (BookGuide guide in guides) {
+            if (guide.Enabled) {
+                GameObject obj = guide.gameObject;
+                if (Vector3.Distance(center, obj.transform.position) <= minimumDistance) {
+                    objects.Add(obj);
+                }
+            }
+        }
+
+        return objects.ToArray();
+    }
+
     public static GameObject getClosestObject(Vector3 center, GameObject[] objects) {
         GameObject closest = null;
         if (objects.Length > 0) {
