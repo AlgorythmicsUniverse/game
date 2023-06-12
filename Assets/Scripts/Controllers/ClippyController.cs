@@ -1,9 +1,11 @@
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using Scripts2D.Scene2Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using Unity.VisualScripting;
 
 public class ClippyController : MonoBehaviour
 {
@@ -127,8 +129,16 @@ public class ClippyController : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         GameObject temp = obj;
-        pickedUp.Remove(obj);
 
+        var objType = obj.GetComponent<CodeObject>().Type;
+        switch (objType)
+        {
+            case CodeObjectType.Expression:
+                NewOperator.UnlockOperator(obj.GetComponent<CodeObject>().Code);
+                break;
+        }
+
+        pickedUp.Remove(obj);
         temp.GetComponent<CodeObject>().disabled = true;
         yield return StartCoroutine(Utility.moveOverSeconds(obj.transform, target, 1f));
         Destroy(temp);

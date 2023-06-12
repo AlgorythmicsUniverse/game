@@ -104,6 +104,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c1c31d90ccccaa4ea85b0d6ce6f4db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  errorPopup: {fileID: 5876736189365955285, guid: 7283b72e0b51d7d4f85f8e7aa8300142,
+    type: 3}
 --- !u!61 &-4439575414483249054
 BoxCollider2D:
   m_ObjectHideFlags: 0

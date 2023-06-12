@@ -24,7 +24,25 @@ public class ItemSlot : MonoBehaviour, IDropHandler
         Debug.Log("OnDrop");
         if (eventData.pointerDrag != null)
         {
-            eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
+            if (gameObject.transform.Find("Type"))
+            {
+                string targetObjectName = gameObject.transform.Find("Type").GetComponent<TMP_Text>().text + "Value";
+                Transform targetObject = parentObject.transform.Find(targetObjectName);
+                if (targetObject != null)
+                {
+                    Vector2 itemSlotPosition = targetObject.GetComponent<RectTransform>().position;
+                    draggedObject.GetComponent<RectTransform>().position = itemSlotPosition;
+                }
+                else
+                {
+                    draggedObject.GetComponent<RectTransform>().position = GetComponent<RectTransform>().position;
+                }
+            }
+            else
+            {
+                draggedObject.GetComponent<RectTransform>().position = GetComponent<RectTransform>().position;
+            }
+
             if (draggedObject.transform.Find("Name"))
             {
                 savedVariableName = draggedObject.transform.Find("Name").GetComponent<TMP_Text>().text;
@@ -41,23 +59,33 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     private void ParseValueByName(GameObject draggedObject)
     {
         string gameObjectName = gameObject.name.Substring(0, gameObject.name.Length - 5);
-        switch (gameObjectName)
+        Debug.Log(gameObjectName);
+        var draggedObjectType = draggedObject.transform.Find("Type").GetComponent<TMP_Text>().text.ToLower();
+        if (draggedObjectType == gameObjectName)
         {
-            case "int":
-                savedValue = draggedObject.transform.Find("Value").GetComponent<TMP_Text>().text;
-                savedValueType = TYPE.INT;
-                Debug.Log("INT dropped, value: " + savedValue);
-                break;
-            case "float":
-                savedValue = draggedObject.transform.Find("Value").GetComponent<TMP_Text>().text;
-                savedValueType = TYPE.FLOAT;
-                Debug.Log("FLOAT dropped, value: " + savedValue);
-                break;
-            case "double":
-                savedValue = draggedObject.transform.Find("Value").GetComponent<TMP_Text>().text;
-                savedValueType = TYPE.DOUBLE;
-                Debug.Log("DOUBLE dropped, value: " + savedValue);
-                break;
+            switch (gameObjectName)
+            {
+                case "int":
+                    savedValue = draggedObject.transform.Find("Value").GetComponent<TMP_Text>().text;
+                    savedValueType = TYPE.INT;
+                    Debug.Log("INT dropped, value: " + savedValue);
+                    break;
+                case "float":
+                    savedValue = draggedObject.transform.Find("Value").GetComponent<TMP_Text>().text;
+                    savedValueType = TYPE.FLOAT;
+                    Debug.Log("FLOAT dropped, value: " + savedValue);
+                    break;
+                case "double":
+                    savedValue = draggedObject.transform.Find("Value").GetComponent<TMP_Text>().text;
+                    savedValueType = TYPE.DOUBLE;
+                    Debug.Log("DOUBLE dropped, value: " + savedValue);
+                    break;
+            }
         }
+        else
+        {
+            Debug.Log("Cannot assign value to variable!");
+        }
+        
     }
 }

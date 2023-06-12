@@ -6,6 +6,7 @@ public class CodeObject : MonoBehaviour
 {
     public string Name;
     public CodeObjectType Type;
+    public string Code;
     [TextArea]
     public string Description;
 

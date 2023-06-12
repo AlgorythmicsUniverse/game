@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Scripts2D.Scene2Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,11 +18,13 @@ public class NewValueElement : MonoBehaviour, IPointerDownHandler
     
     private void Awake()
     {
-        dropdownItems.Add("INT");
-        dropdownItems.Add("DOUBLE");
-        dropdownItems.Add("FLOAT");
-        dropdownItems.Add("STRING");
-        dropdownItems.Add("BOOLEAN");
+        foreach (var type in NewVariable.GetUnlockedTypes())
+        {
+            if (!dropdownItems.Contains(type))
+            {
+                dropdownItems.Add(type);
+            }
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -92,7 +95,7 @@ public class NewValueElement : MonoBehaviour, IPointerDownHandler
                 {
                     inputText = inputTextTemp;
                 }
-                Debug.Log("OK! + " + inputText);
+                Debug.Log("OK! input= " + inputText);
                 if (inputText == "")
                 {
                     errorPopup.Show("No value given, element could not've been created!");
