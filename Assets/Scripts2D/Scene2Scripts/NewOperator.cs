@@ -16,10 +16,6 @@ namespace Scripts2D.Scene2Scripts
         private int clickCount;
         private static List<string> unlockedOperators = new();
 
-        private void Update()
-        {
-        }
-
         public void OnPointerDown(PointerEventData eventData)
         {
             UI_Blocker.Show_Static();

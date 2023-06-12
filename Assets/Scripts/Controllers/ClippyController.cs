@@ -130,7 +130,7 @@ public class ClippyController : MonoBehaviour
         var objType = obj.GetComponent<CodeObject>().Type;
         switch (objType)
         {
-            case CodeObjectType.Expression:
+            case CodeObjectType.Operator:
                 NewOperator.UnlockOperator(obj.GetComponent<CodeObject>().Code);
                 break;
         }
