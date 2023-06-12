@@ -60,6 +60,7 @@ public class GameController : MonoBehaviour
         yield return StartCoroutine(Utility.scaleOverSeconds(screenGeometry, Vector3.one, SwitchDuration));
 
         MainCamera.orthographic = true;
+        MainCamera.orthographicSize = 540;
         Quaternion rotation = Quaternion.Euler(Vector3.zero);
         MainCamera.transform.SetPositionAndRotation(Vector3.back, rotation);
 

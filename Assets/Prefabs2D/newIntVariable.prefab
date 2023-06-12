@@ -232,6 +232,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c1c31d90ccccaa4ea85b0d6ce6f4db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  errorPopup: {fileID: 5876736189365955285, guid: 7283b72e0b51d7d4f85f8e7aa8300142,
+    type: 3}
 --- !u!225 &-3860316902789747191
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -831,3 +833,21 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 6155145514347374851}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4259977068109022823 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7959270842736668516, guid: 148d58946c7b2df47a1bea0d75297e40,
+    type: 3}
+  m_PrefabInstance: {fileID: 6155145514347374851}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &9082057671567076728
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4259977068109022823}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
