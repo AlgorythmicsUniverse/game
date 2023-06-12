@@ -8,6 +8,7 @@ TagManager:
   - Hitbox
   - Extraction
   - CodeObject
+  - BookGuide
   layers:
   - Default
   - TransparentFX
