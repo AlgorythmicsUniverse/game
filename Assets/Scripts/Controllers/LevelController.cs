@@ -41,4 +41,9 @@ public class LevelController : MonoBehaviour
             SceneManager.LoadScene(chapter, LoadSceneMode.Single);
         }
     }
+
+    public void loadMainMenu() {
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+		Cursor.lockState = CursorLockMode.None;
+    }
 }

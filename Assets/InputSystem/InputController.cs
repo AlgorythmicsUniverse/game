@@ -55,6 +55,15 @@ namespace StarterAssets
 			GameController.Instance.switchMode();
 			UnlockCameraInput(false);
 		}
+
+		public void OnOpenMenu(InputValue value) {
+			if (!GameController.Instance.GetPaused()) {
+				GameController.Instance.showMenu();
+			} else {
+				GameController.Instance.hideMenu();
+			}
+		}
+
 #endif
 
 

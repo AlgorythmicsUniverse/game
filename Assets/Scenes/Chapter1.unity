@@ -1873,6 +1873,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1116853983, guid: 12cd3eb826729f146b8d605ca06997f4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1661289109}
+    - target: {fileID: 1116853983, guid: 12cd3eb826729f146b8d605ca06997f4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: loadMainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 1188195670, guid: 12cd3eb826729f146b8d605ca06997f4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1661289109}
+    - target: {fileID: 1188195670, guid: 12cd3eb826729f146b8d605ca06997f4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: unpauseGame
+      objectReference: {fileID: 0}
     - target: {fileID: 788165321398254402, guid: 12cd3eb826729f146b8d605ca06997f4,
         type: 3}
       propertyPath: m_Name

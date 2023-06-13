@@ -13,11 +13,13 @@ public class GameController : MonoBehaviour
     private Camera MainCamera;
     private Canvas GameUI;
     private Canvas ScreenUI;
+    private GameObject Player;
 
     private bool Is3D = true;
     private bool lockSwitch = false;
     private int currentPuzzle = 0; // -1 means no puzzles loaded yet
     private GameObject loadedPuzzle;
+    private bool paused = false;
 
     void Awake() {
         if (Instance == null) {
@@ -29,16 +31,28 @@ public class GameController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    void Start() {
+        // Manually reload when debugging single scene
+        if (SceneManager.GetActiveScene().name != "MainMenu") {
+            Reload();
+        }
+    }
+
     public void Reload() {
         MainCamera = new List<GameObject>(SceneManager.GetActiveScene().GetRootGameObjects()).Find(x => x.name == "MainCamera").GetComponent<Camera>();
         GameUI = new List<GameObject>(SceneManager.GetActiveScene().GetRootGameObjects()).Find(x => x.name == "GameUI").GetComponent<Canvas>();
         ScreenUI = new List<GameObject>(SceneManager.GetActiveScene().GetRootGameObjects()).Find(x => x.name == "ScreenUI").GetComponent<Canvas>();
+        Player = new List<GameObject>(SceneManager.GetActiveScene().GetRootGameObjects()).Find(x => x.name == "PlayerClippy");
 
         StartCoroutine(to3D(false));
     }
 
     public bool GetIs3D() {
         return Is3D;
+    }
+
+    public bool GetPaused() {
+        return paused;
     }
 
     public void switchMode() {
@@ -92,6 +106,34 @@ public class GameController : MonoBehaviour
         ScreenUI.enabled = false;
         
         lockSwitch = false;
+    }
+
+    public void pauseGame() {
+        MainCamera.GetComponent<Cinemachine.CinemachineBrain>().enabled = false;
+        Time.timeScale = 0;
+		Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void unpauseGame() {
+        MainCamera.GetComponent<Cinemachine.CinemachineBrain>().enabled = true;
+        Time.timeScale = 1;
+		Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void showMenu() {
+        GameObject menu = GameUI.transform.Find("Menu").gameObject;
+        menu.SetActive(true);
+
+        paused = true;
+        pauseGame();
+    }
+
+    public void hideMenu() {
+        GameObject menu = GameUI.transform.Find("Menu").gameObject;
+        menu.SetActive(false);
+
+        paused = false;
+        unpauseGame();
     }
 
     public void nextPuzzle() {
