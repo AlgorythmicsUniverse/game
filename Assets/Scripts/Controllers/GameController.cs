@@ -1,0 +1,130 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class GameController : MonoBehaviour
+{
+    public static GameController Instance = null;
+
+    public float SwitchDuration = 0.2f;
+    public float TabMinScale = 0.2f;
+
+    private Camera MainCamera;
+    private Canvas GameUI;
+    private Canvas ScreenUI;
+
+    private bool Is3D = true;
+    private bool lockSwitch = false;
+    private int currentPuzzle = 0; // -1 means no puzzles loaded yet
+    private GameObject loadedPuzzle;
+
+    void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        } else if (Instance != this) {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public void Reload() {
+        MainCamera = new List<GameObject>(SceneManager.GetActiveScene().GetRootGameObjects()).Find(x => x.name == "MainCamera").GetComponent<Camera>();
+        GameUI = new List<GameObject>(SceneManager.GetActiveScene().GetRootGameObjects()).Find(x => x.name == "GameUI").GetComponent<Canvas>();
+        ScreenUI = new List<GameObject>(SceneManager.GetActiveScene().GetRootGameObjects()).Find(x => x.name == "ScreenUI").GetComponent<Canvas>();
+
+        StartCoroutine(to3D(false));
+    }
+
+    public bool GetIs3D() {
+        return Is3D;
+    }
+
+    public void switchMode() {
+        if (lockSwitch) {
+            return;
+        }
+
+        if (Is3D) {
+            StartCoroutine(to2D());
+        } else {
+            StartCoroutine(to3D());
+        }
+    }
+
+    public IEnumerator to2D(bool animation = true) {
+        lockSwitch = true;
+        Is3D = false;
+
+        MainCamera.GetComponent<Cinemachine.CinemachineBrain>().enabled = false;
+        GameUI.enabled = false;
+        ScreenUI.enabled = true;
+        Transform screenGeometry = ScreenUI.transform.Find("Geometry");
+
+        if (animation) {
+            screenGeometry.transform.localScale = Vector3.one*TabMinScale;
+            yield return StartCoroutine(Utility.scaleOverSeconds(screenGeometry, Vector3.one, SwitchDuration));
+        }
+
+        MainCamera.orthographic = true;
+        MainCamera.orthographicSize = 540;
+        Quaternion rotation = Quaternion.Euler(Vector3.zero);
+        MainCamera.transform.SetPositionAndRotation(Vector3.back, rotation);
+
+        lockSwitch = false;
+    }
+
+    public IEnumerator to3D(bool animation = true) {
+        lockSwitch = true;
+        Is3D = true;
+
+        MainCamera.GetComponent<Cinemachine.CinemachineBrain>().enabled = true;
+        MainCamera.orthographic = false;
+        Transform screenGeometry = ScreenUI.transform.Find("Geometry");
+
+        if (animation) {
+            screenGeometry.transform.localScale = Vector3.one;
+            yield return StartCoroutine(Utility.scaleOverSeconds(screenGeometry, Vector3.one*TabMinScale, SwitchDuration));
+        }
+
+        GameUI.enabled = true;
+        ScreenUI.enabled = false;
+        
+        lockSwitch = false;
+    }
+
+    public void nextPuzzle() {
+        // If last puzzle
+        if (Constants.Puzzles[SceneManager.GetActiveScene().name].Count == (currentPuzzle + 1)) {
+            string nextChapter = Constants.Chapters.Find(x => x.SceneName == SceneManager.GetActiveScene().name).UnlocksChapter;
+
+            // Not last chapter
+            if (nextChapter != "") {
+                // Unlock next chapter
+                LevelController.Instance.unlockChapter(nextChapter);
+                Debug.Log("Unlocked next chapter: " + nextChapter);
+
+                // Load next chapter
+                LevelController.Instance.loadChapter(nextChapter);
+                currentPuzzle = 0;
+            }
+        } else {
+            // Unload current puzzle
+            unloadPuzzle();
+
+            currentPuzzle++;
+            // Load next puzzle
+            loadPuzzle("Puzzles/" + Constants.Puzzles[SceneManager.GetActiveScene().name][currentPuzzle].PrefabName);
+        }
+    }
+
+    public void unloadPuzzle() {
+
+    }
+
+    public void loadPuzzle(string puzzlePath) {
+        // Load puzzle
+        Debug.Log("Loading puzzle: " + puzzlePath);
+    }
+}

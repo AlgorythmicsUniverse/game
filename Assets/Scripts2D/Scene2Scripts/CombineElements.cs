@@ -1,8 +1,10 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class CombineElements : MonoBehaviour,IEndDragHandler, IBeginDragHandler, IDragHandler, IPointerDownHandler, IPointerUpHandler
-{ 
+{
+    [SerializeField] private UI_ErrorPopup errorPopup;
     private Vector2 mousePosition;
     private Vector3 offset;
     private CanvasGroup canvasGroup;
@@ -29,7 +31,19 @@ public class CombineElements : MonoBehaviour,IEndDragHandler, IBeginDragHandler,
         transform.SetParent(originalParent);
         canvasGroup.alpha = .6f;
         canvasGroup.blocksRaycasts = false;
+
+        // Letiltjuk a gyermek elemek raycast-ét
+        foreach (var child in transform.GetComponentsInChildren<Transform>())
+        {
+            var childCanvasGroup = child.GetComponent<CanvasGroup>();
+            if (childCanvasGroup != null)
+            {
+                childCanvasGroup.blocksRaycasts = false;
+                childCanvasGroup.interactable = false;
+            }
+        }
     }
+
 
     public void OnDrag(PointerEventData eventData)
     {
@@ -41,9 +55,26 @@ public class CombineElements : MonoBehaviour,IEndDragHandler, IBeginDragHandler,
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("OnEndDrag");
+        //var objectName = gameObject.transform.Find("Name").GetComponent<TMP_Text>().text;
+        string objectType = "no type";
+        if (gameObject.transform.Find("Type"))
+        {
+            objectType = gameObject.transform.Find("Type").GetComponent<TMP_Text>().text;
+        }
+        Debug.Log($"OnEndDrag = {objectType}");
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
+        
+        // Visszaállítjuk a gyermek elemek raycast-ét
+        foreach (var child in transform.GetComponentsInChildren<Transform>())
+        {
+            var childCanvasGroup = child.GetComponent<CanvasGroup>();
+            if (childCanvasGroup != null)
+            {
+                childCanvasGroup.blocksRaycasts = true;
+                childCanvasGroup.interactable = true;
+            }
+        }
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -53,36 +84,16 @@ public class CombineElements : MonoBehaviour,IEndDragHandler, IBeginDragHandler,
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        string thisGameObjectName = gameObject.name;
-        string collisionGameObjectName = collision.gameObject.name;
-
+        string objectType = "no type";
+        if (gameObject.transform.Find("Type"))
+        {
+            objectType = gameObject.transform.Find("Type").GetComponent<TMP_Text>().text;
+        }
         if (mouseButtonReleased)
         {
-            //if (itemPlacedInArray(thisGameObjectName, collisionGameObjectName,collision))
-            //{
-                Debug.Log(thisGameObjectName);
-                transform.SetParent(collision.transform);
-                //}
+            Debug.Log("Object type: " + objectType);
+            transform.SetParent(collision.transform);
+            
         }
     }
-
-    /*private bool itemPlacedInArray(string thisGameObjectName, string collisionGameObjectName,Collider2D collision)
-    {
-        Debug.Log(collisionGameObjectName.Length);
-        if (collisionGameObjectName.Length > 10)
-        {
-            collisionGameObjectName = collisionGameObjectName.Remove(collisionGameObjectName.Length - 1);
-        }
-        if (thisGameObjectName == "ArrayElement(Clone)" && collisionGameObjectName == "ArrayPlace")
-        {
-            return true;
-        }
-
-        if (thisGameObjectName == "ArrayElement(Clone)" && collisionGameObjectName == "Value")
-        {
-            return true;
-        }
-        return false;
-    }*/
-
 }

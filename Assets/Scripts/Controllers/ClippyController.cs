@@ -1,18 +1,22 @@
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using Scripts2D.Scene2Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using Unity.VisualScripting;
 
 public class ClippyController : MonoBehaviour
 {
-    private List<GameObject> pickedUp;
-    private Dictionary<GameObject, float> objectToRotAngle;
-    private List<GameObject> nearbyObjects;
-    private Dictionary<GameObject, GameObject> tooltipsForNearbyObjects;
-    private List<GameObject> nearbyInteractables;
-    private Dictionary<GameObject, GameObject> tooltipsForInteractableObjects;
+    private List<GameObject> pickedUp = new List<GameObject>();
+    private Dictionary<GameObject, float> objectToRotAngle = new Dictionary<GameObject, float>();
+    private List<GameObject> nearbyObjects = new List<GameObject>();
+    private Dictionary<GameObject, GameObject> tooltipsForNearbyObjects = new Dictionary<GameObject, GameObject>();
+    private List<GameObject> nearbyInteractables = new List<GameObject>();
+    private Dictionary<GameObject, GameObject> tooltipsForInteractableObjects = new Dictionary<GameObject, GameObject>();
+    private List<GameObject> nearbyGuides = new List<GameObject>();
+    private Dictionary<GameObject, GameObject> tooltipsForGuideObjects = new Dictionary<GameObject, GameObject>();
 
     [SerializeField]
     public int maximumObjectPickUp = 3;
@@ -49,13 +53,6 @@ public class ClippyController : MonoBehaviour
     private Vector3 startPosition;
 
     void Start() {
-        pickedUp = new List<GameObject>();
-        objectToRotAngle = new Dictionary<GameObject, float>();
-        nearbyObjects = new List<GameObject>();
-        tooltipsForNearbyObjects = new Dictionary<GameObject, GameObject>();
-        nearbyInteractables = new List<GameObject>();
-        tooltipsForInteractableObjects = new Dictionary<GameObject, GameObject>();
-
         startPosition = transform.position;
     }
 
@@ -71,6 +68,8 @@ public class ClippyController : MonoBehaviour
         Utility.pointObjectsTowardsCamera(tooltipsForNearbyObjects.Values.ToArray());
         storeNearbyInteractableObjects();
         Utility.pointObjectsTowardsCamera(tooltipsForInteractableObjects.Values.ToArray());
+        storeNearbyGuideObjects();
+        Utility.pointObjectsTowardsCamera(tooltipsForGuideObjects.Values.ToArray());
     }
 
     void OnTriggerEnter(Collider other) {
@@ -78,11 +77,13 @@ public class ClippyController : MonoBehaviour
     }
 
     void OnInteract(InputValue value) {
-        if (nearbyInteractables.Count > 0) {
-            GameObject interactable = Utility.getClosestObject(transform.position, nearbyInteractables.ToArray());
+        if (GameController.Instance.GetIs3D()) {
+            if (nearbyInteractables.Count > 0) {
+                GameObject interactable = Utility.getClosestObject(transform.position, nearbyInteractables.ToArray());
 
-            if (interactable.tag == "Extraction") {
-                extractPickedup(interactable.transform.Find("ExtractPoint").position);
+                if (interactable.tag == "Extraction") {
+                    extractPickedup(interactable.transform.Find("ExtractPoint").position);
+                }
             }
         }
     }
@@ -125,10 +126,19 @@ public class ClippyController : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         GameObject temp = obj;
-        pickedUp.Remove(obj);
 
+        var objType = obj.GetComponent<CodeObject>().Type;
+        switch (objType)
+        {
+            case CodeObjectType.Operator:
+                NewOperator.UnlockOperator(obj.GetComponent<CodeObject>().Code);
+                break;
+        }
+
+        pickedUp.Remove(obj);
         temp.GetComponent<CodeObject>().disabled = true;
-        yield return StartCoroutine(Utility.moveOverSeconds(obj, target, 1f));
+        temp.GetComponent<Floating>().disabled = true;
+        yield return StartCoroutine(Utility.moveOverSeconds(obj.transform, target, 1f));
         Destroy(temp);
     }
     
@@ -166,7 +176,7 @@ public class ClippyController : MonoBehaviour
                 tooltip.transform.SetParent(obj.transform);
                 tooltipsForNearbyObjects[obj] = tooltip;
 
-                Utility.setupCodeObjectTooltip(tooltip, obj);
+                UiUtils.setupCodeObjectTooltip(tooltip, obj);
             }
         }
 
@@ -195,7 +205,7 @@ public class ClippyController : MonoBehaviour
 
                 string key = obj.GetComponent<Interactable>().Key;
 
-                Utility.setupInteractableTooltip(tooltip, key);
+                UiUtils.setupInteractableTooltip(tooltip, key);
             }
         }
 
@@ -206,6 +216,34 @@ public class ClippyController : MonoBehaviour
 
                 Destroy(tooltipsForInteractableObjects[obj]);
                 tooltipsForInteractableObjects.Remove(obj);
+            }
+        }
+    }
+
+    void storeNearbyGuideObjects() {
+        // Store nearby guide objects in local list to prevent multiple triggering
+        List<GameObject> objects = new List<GameObject>(Utility.getNearbyGuideObjects(transform.position, minimumObjectDistance));
+        foreach (GameObject obj in objects) {
+            if (!nearbyGuides.Contains(obj)) {
+                nearbyGuides.Add(obj);
+
+                GameObject tooltip = obj.transform.Find("GuideTooltip").gameObject;
+                tooltip.transform.position = obj.transform.position + new Vector3(0, tooltipAltitude, 0);
+                tooltip.SetActive(true);
+
+                tooltipsForGuideObjects[obj] = tooltip;
+            }
+        }
+
+        // Remove objects no longer nearby
+        foreach (GameObject obj in nearbyGuides.ToArray()) {
+            if (!objects.Contains(obj)) {
+                nearbyGuides.Remove(obj);
+
+                GameObject tooltip = obj.transform.Find("GuideTooltip").gameObject;
+                tooltip.SetActive(false);
+
+                tooltipsForGuideObjects.Remove(obj);
             }
         }
     }
