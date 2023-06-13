@@ -1,4 +1,4 @@
-%YAML 1.1
+    %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &5823579823733114369
 GameObject:
@@ -104,8 +104,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c1c31d90ccccaa4ea85b0d6ce6f4db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
+=======
   errorPopup: {fileID: 5876736189365955285, guid: 7283b72e0b51d7d4f85f8e7aa8300142,
     type: 3}
+>>>>>>> master
 --- !u!61 &-4439575414483249054
 BoxCollider2D:
   m_ObjectHideFlags: 0
