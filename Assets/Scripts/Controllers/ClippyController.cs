@@ -126,8 +126,8 @@ public class ClippyController : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         GameObject temp = obj;
-
         var objType = obj.GetComponent<CodeObject>().Type;
+        Debug.Log(objType.ToString());
         switch (objType)
         {
             case CodeObjectType.Operator:

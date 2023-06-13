@@ -37,14 +37,16 @@ namespace Scripts2D.Scene2Scripts
     
         public void Show(List<string> items,Action onCancel,Action<string> onOk)
         {
+            variableDropdown.ClearOptions();
             if (items.Count > 0)
             {
-                variableDropdown.options.Clear();
                 dropdownItems = items;
                 foreach (var item in dropdownItems )
                 {
                     variableDropdown.options.Add(new TMP_Dropdown.OptionData() { text = item });
                 }
+
+                variableDropdown.value = 1;
                 DropdownItemSelected(variableDropdown);
         
                 variableDropdown.onValueChanged.AddListener(delegate { DropdownItemSelected(variableDropdown); });

@@ -14,17 +14,11 @@ public class NewValueElement : MonoBehaviour, IPointerDownHandler
     [SerializeField] private UI_InputWindow inputWindow;
     [SerializeField] private UI_DropdownVariableSelector dropdownVariableSelector;
     [SerializeField] private UI_ErrorPopup errorPopup;
-    List<string> dropdownItems = new List<string>();
-    
+    List<string> dropdownItems = new();
+
     private void Awake()
     {
-        foreach (var type in NewVariable.GetUnlockedTypes())
-        {
-            if (!dropdownItems.Contains(type))
-            {
-                dropdownItems.Add(type);
-            }
-        }
+        dropdownItems = NewVariable.GetUnlockedTypes();
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -37,7 +31,7 @@ public class NewValueElement : MonoBehaviour, IPointerDownHandler
                 Debug.Log("Cancel!");
                 UI_Blocker.Hide_Static();
             },
-            (string variableType) =>
+            variableType =>
             {
                 CreateNewValueElement(variableType);
             }
