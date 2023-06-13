@@ -11,4 +11,13 @@ public class SceneController : MonoBehaviour
     public void nextPuzzle() {
         GameController.Instance.nextPuzzle();
     }
+
+    public void unpauseGame() {
+        GameController.Instance.hideMenu();
+    }
+
+    public void loadMainMenu() {
+        unpauseGame();
+        LevelController.Instance.loadMainMenu();
+    }
 }
