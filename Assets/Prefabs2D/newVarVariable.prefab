@@ -147,12 +147,11 @@ GameObject:
   - component: {fileID: 403245711984864709}
   - component: {fileID: 7549759094502277334}
   - component: {fileID: 2473992246650947847}
-  - component: {fileID: 6663288861837453790}
   - component: {fileID: -3860316902789747191}
   - component: {fileID: -8553506205900582201}
   - component: {fileID: 5238681868566963180}
   m_Layer: 5
-  m_Name: newIntVariable
+  m_Name: newVarVariable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -235,19 +234,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   errorPopup: {fileID: 5876736189365955285, guid: 7283b72e0b51d7d4f85f8e7aa8300142,
     type: 3}
---- !u!114 &6663288861837453790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6244093341466785711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea772b08f30d45368ce0790b18c4c2c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Type: 0
 --- !u!225 &-3860316902789747191
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -508,7 +494,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: int
+  m_text: var
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -722,7 +708,7 @@ PrefabInstance:
     - target: {fileID: 7959270842736668516, guid: 148d58946c7b2df47a1bea0d75297e40,
         type: 3}
       propertyPath: m_Name
-      value: intValue
+      value: varValue
       objectReference: {fileID: 0}
     - target: {fileID: 7959270842736668519, guid: 148d58946c7b2df47a1bea0d75297e40,
         type: 3}

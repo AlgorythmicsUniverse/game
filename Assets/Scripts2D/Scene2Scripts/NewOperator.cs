@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Scripts2D.Enums;
+using Scripts2D.Interfaces;
+using Scripts2D.Models2D;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,12 +17,12 @@ namespace Scripts2D.Scene2Scripts
         private int collectedNumber = 10;
         private BoxCollider boxCollider;
         private int clickCount;
-        private static List<string> unlockedOperators = new();
+        private static List<IBlock> unlockedOperators = new();
 
 
         private void Start()
         {
-            unlockedOperators = new List<string>();
+            unlockedOperators = new List<IBlock>();
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -61,7 +64,16 @@ namespace Scripts2D.Scene2Scripts
 
         public static void UnlockOperator(string opString)
         {
-            unlockedOperators.Add(opString);
+            switch (opString)
+            {
+                case "+":
+                    var newOperatorGO = new GameObject("Operator");
+                    var newOperator = newOperatorGO.AddComponent<Operator>();
+                    newOperator.SetOperator(OperatorE.Add);
+                    unlockedOperators.Add(newOperator);
+                    break;
+            }
         }
+
     }
 }
