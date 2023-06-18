@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Scripts2D.Enums;
+using Scripts2D.Interfaces;
+using Scripts2D.Models2D;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,7 +17,13 @@ namespace Scripts2D.Scene2Scripts
         private int collectedNumber = 10;
         private BoxCollider boxCollider;
         private int clickCount;
-        private static List<string> unlockedOperators = new();
+        private static List<IBlock> unlockedOperators = new();
+
+
+        private void Start()
+        {
+            unlockedOperators = new List<IBlock>();
+        }
 
         public void OnPointerDown(PointerEventData eventData)
         {
@@ -55,7 +64,49 @@ namespace Scripts2D.Scene2Scripts
 
         public static void UnlockOperator(string opString)
         {
-            unlockedOperators.Add(opString);
+            var newOperatorGO = new GameObject("Operator");
+            var newOperator = newOperatorGO.AddComponent<Operator>();
+            switch (opString)
+            {
+                case "+":
+                    newOperator.SetOperator(OperatorE.Add);
+                    unlockedOperators.Add(newOperator);
+                    break;
+                case "-":
+                    newOperator.SetOperator(OperatorE.Subtract);
+                    unlockedOperators.Add(newOperator);
+                    break;
+                case "*":
+                    newOperator.SetOperator(OperatorE.Multiply);
+                    unlockedOperators.Add(newOperator);
+                    break;
+                case "/":
+                    newOperator.SetOperator(OperatorE.Divide);
+                    unlockedOperators.Add(newOperator);
+                    break;
+                case "(":
+                    newOperator.SetOperator(OperatorE.LParenthesis);
+                    unlockedOperators.Add(newOperator);
+                    break;
+                case ")":
+                    newOperator.SetOperator(OperatorE.RParenthesis);
+                    unlockedOperators.Add(newOperator);
+                    break;
+                case "^":
+                    newOperator.SetOperator(OperatorE.Exponentiation);
+                    unlockedOperators.Add(newOperator);
+                    break;
+                case "%":
+                    newOperator.SetOperator(OperatorE.Modulus);
+                    unlockedOperators.Add(newOperator);
+                    break;
+                case "=":
+                    newOperator.SetOperator(OperatorE.Assignment);
+                    unlockedOperators.Add(newOperator);
+                    break;
+                
+            }
         }
+
     }
 }
