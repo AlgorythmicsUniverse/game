@@ -1,5 +1,6 @@
 using System;
 using CodeMonkey.Utils;
+using Scripts2D.Models2D;
 using TMPro;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace Scripts2D.Scene2Scripts
 {
     public class UI_InputWindowVariable : MonoBehaviour
     {
-
+        [SerializeField] private UI_ErrorPopup errorPopup;
         private Button_UI OKButton;
         private Button_UI CancelButton;
         private TMP_InputField inputField;
@@ -20,17 +21,7 @@ namespace Scripts2D.Scene2Scripts
             CancelButton = transform.Find("CancelButton").GetComponent<Button_UI>();
             inputField = transform.Find("InputField").GetComponent<TMP_InputField>();
             variableDropdown = transform.Find("Dropdown").GetComponent<TMP_Dropdown>();
-            variableDropdown.options.Clear();
-            var dropdownItems = NewVariable.GetUnlockedTypes();
-            foreach (var item in dropdownItems )
-            {
-                variableDropdown.options.Add(new TMP_Dropdown.OptionData() { text = item });
-            }
-
-            DropdownItemSelected(variableDropdown);
-        
-            variableDropdown.onValueChanged.AddListener(delegate { DropdownItemSelected(variableDropdown); });
-        
+            variableDropdown.ClearOptions();
             Hide();
         }
 
@@ -48,28 +39,44 @@ namespace Scripts2D.Scene2Scripts
 
         public void Show(string validCharacters,int characterLimit,Action onCancel,Action<string,string> onOk)
         {
-            gameObject.SetActive(true);
-            transform.SetAsLastSibling();
-
-            inputField.characterLimit = characterLimit;
-            inputField.onValidateInput = (string text, int charIndex, char addedChar) =>
+            variableDropdown.ClearOptions();
+            var dropdownItems = NewVariable.GetUnlockedTypes();
+            foreach (var item in dropdownItems )
             {
-                return ValidateChar(validCharacters, addedChar);
-            };
+                var nItem = (Variable)item;
+                Debug.Log($"TESZT: {nItem.GetVarType().ToString()}");
+                variableDropdown.options.Add(new TMP_Dropdown.OptionData() { text = nItem.GetVarType().ToString() });
+            }
+            DropdownItemSelected(variableDropdown);
         
-
-
-            OKButton.ClickFunc = () =>
+            variableDropdown.onValueChanged.AddListener(delegate { DropdownItemSelected(variableDropdown); });
+            if (variableDropdown.options.Count < 1)
             {
-                Hide();
-                onOk(inputField.text,variableType);
-            };
-
-            CancelButton.ClickFunc = () =>
+                errorPopup.Show("No items unlocked of this type!");
+            }
+            else
             {
-                Hide();
-                onCancel();
-            };
+                gameObject.SetActive(true);
+                transform.SetAsLastSibling();
+
+                inputField.characterLimit = characterLimit;
+                inputField.onValidateInput = (_, _, addedChar) =>
+                {
+                    return ValidateChar(validCharacters, addedChar);
+                };
+                
+                OKButton.ClickFunc = () =>
+                {
+                    Hide();
+                    onOk(inputField.text,variableType);
+                };
+
+                CancelButton.ClickFunc = () =>
+                {
+                    Hide();
+                    onCancel();
+                };
+            }
         }
 
         public void Hide()
@@ -91,8 +98,9 @@ namespace Scripts2D.Scene2Scripts
 
         private void DropdownItemSelected(TMP_Dropdown dropdown)
         {
+            dropdown.RefreshShownValue();
             int index = dropdown.value;
-            Debug.Log(dropdown.options[index].text);
+            Debug.Log($"SELECTED FROM DROPDOWN: {dropdown.options[index].text}");
             variableType = dropdown.options[index].text;
         }
 
