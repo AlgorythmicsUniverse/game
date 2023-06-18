@@ -14,7 +14,18 @@ namespace Scripts2D.Enums
         [Description("*")]
         Multiply,
         [Description("/")]
-        Divide
+        Divide,
+        [Description("(")]
+        LParenthesis,
+        [Description(")")]
+        RParenthesis,
+        [Description("^")]
+        Exponentiation,
+        [Description("%")]
+        Modulus,
+        [Description("=")]
+        Assignment,
+        
     }
 
     public static class OperatorExtensions
