@@ -9,6 +9,7 @@ TagManager:
   - Extraction
   - CodeObject
   - BookGuide
+  - Tips
   layers:
   - Default
   - TransparentFX
