@@ -220,7 +220,11 @@ MonoBehaviour:
   m_ItemImage: {fileID: 0}
   m_Value: 0
   m_Options:
-    m_Options: []
+    m_Options:
+    - m_Text: DOUBLE
+      m_Image: {fileID: 0}
+    - m_Text: INT
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -588,10 +592,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   errorPopup: {fileID: 5876736189365955285, guid: 7283b72e0b51d7d4f85f8e7aa8300142,
     type: 3}
-  OKButton: {fileID: 2715110062428641699}
-  CancelButton: {fileID: 1276943721463423008}
-  inputField: {fileID: 5002458838564336587}
-  variableDropdown: {fileID: 9042100980335827563}
 --- !u!1 &993900150829269284
 GameObject:
   m_ObjectHideFlags: 0
@@ -1103,7 +1103,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: DOUBLE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
