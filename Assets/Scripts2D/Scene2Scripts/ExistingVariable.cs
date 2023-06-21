@@ -14,8 +14,8 @@ namespace Scripts2D.Scene2Scripts
         {
             UI_Blocker.Show_Static();
             inputWindow.Show(
-                "abcdefghijklmnopqrstuvwxyz",
-                5,
+                "abcdefghijklmnopqrstuvwxyz1234567890",
+                12,
                 () =>
                 {
                     Debug.Log("Cancel");

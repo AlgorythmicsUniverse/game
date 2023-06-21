@@ -30,14 +30,15 @@ namespace Scripts2D.Scene2Scripts
         public void Awake()
         {
             usedVariableNames.Clear();
+            unlockedTypes.Clear();
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
             UI_Blocker.Show_Static();
             inputWindow.Show(
-                "abcdefghijklmnopqrstuvwxyz",
-                5,
+                "abcdefghijklmnopqrstuvwxyz1234567890",
+                12,
                 () =>
                 {
                     Debug.Log("Cancel");
@@ -110,6 +111,7 @@ namespace Scripts2D.Scene2Scripts
                 }
 
                 newObject.transform.Find("Name").GetComponent<TMP_Text>().text = inputName;
+                newObject.transform.SetAsLastSibling();
                 usedVariableNames.Add(inputName, StringToVarType(variableType));
             }
         }

@@ -21,7 +21,7 @@ namespace Scripts2D.Scene2Scripts
             OKButton = transform.Find("OKButton").GetComponent<Button_UI>();
             CancelButton = transform.Find("CancelButton").GetComponent<Button_UI>();
             variableDropdown = transform.Find("Dropdown").GetComponent<TMP_Dropdown>();
-            variableDropdown.options.Clear();
+            variableDropdown.ClearOptions();
             Hide();
         }
         private void Update()

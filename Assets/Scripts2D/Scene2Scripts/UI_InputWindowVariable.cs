@@ -58,11 +58,11 @@ namespace Scripts2D.Scene2Scripts
             {
                 gameObject.SetActive(true);
                 transform.SetAsLastSibling();
-
+                
                 inputField.characterLimit = characterLimit;
-                inputField.onValidateInput = (_, _, addedChar) =>
+                inputField.onValidateInput = (_, index, addedChar) =>
                 {
-                    return ValidateChar(validCharacters, addedChar);
+                    return ValidateChar(validCharacters, index, addedChar);
                 };
                 
                 OKButton.ClickFunc = () =>
@@ -84,8 +84,13 @@ namespace Scripts2D.Scene2Scripts
             gameObject.SetActive(false);
         }
 
-        private char ValidateChar(string validCharacters,char addedChar)
+        private char ValidateChar(string validCharacters, int index,char addedChar)
         {
+            if (index == 0) {
+                if ("1234567890".IndexOf(addedChar) != -1) {
+                    return '\0';
+                }
+            }
             if(validCharacters.IndexOf(addedChar) != -1)
             {
                 return addedChar;
@@ -100,8 +105,10 @@ namespace Scripts2D.Scene2Scripts
         {
             dropdown.RefreshShownValue();
             int index = dropdown.value;
-            Debug.Log($"SELECTED FROM DROPDOWN: {dropdown.options[index].text}");
-            variableType = dropdown.options[index].text;
+            if (dropdown.options.Count > 0) {
+                Debug.Log($"SELECTED FROM DROPDOWN: {dropdown.options[index].text}");
+                variableType = dropdown.options[index].text;
+            }
         }
 
     }
