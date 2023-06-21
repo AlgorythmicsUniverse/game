@@ -41,7 +41,7 @@ namespace Scripts2D.Scene2Scripts
             GameObject newGameObject;
             string validCharacters = "";
             string inputText = "";
-            int charLimit = 5;
+            int charLimit = 12;
             switch (variableType)
             {
                 case "INT":
