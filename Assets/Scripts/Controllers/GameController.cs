@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -74,7 +75,7 @@ public class GameController : MonoBehaviour
         MainCamera.GetComponent<Cinemachine.CinemachineBrain>().enabled = false;
         GameUI.enabled = false;
         ScreenUI.enabled = true;
-        Transform screenGeometry = ScreenUI.transform.Find("Geometry");
+        Transform screenGeometry = ScreenUI.transform.Find("Canvas").transform.Find("Geometry");
 
         if (animation) {
             screenGeometry.transform.localScale = Vector3.one*TabMinScale;
@@ -95,7 +96,7 @@ public class GameController : MonoBehaviour
 
         MainCamera.GetComponent<Cinemachine.CinemachineBrain>().enabled = true;
         MainCamera.orthographic = false;
-        Transform screenGeometry = ScreenUI.transform.Find("Geometry");
+        Transform screenGeometry = ScreenUI.transform.Find("Canvas").transform.Find("Geometry");
 
         if (animation) {
             screenGeometry.transform.localScale = Vector3.one;
@@ -157,16 +158,40 @@ public class GameController : MonoBehaviour
 
             currentPuzzle++;
             // Load next puzzle
-            loadPuzzle("Puzzles/" + Constants.Puzzles[SceneManager.GetActiveScene().name][currentPuzzle].PrefabName);
+            loadPuzzle(Constants.Puzzles[SceneManager.GetActiveScene().name][currentPuzzle].PrefabName);
         }
     }
 
-    public void unloadPuzzle() {
-
+    public void unloadPuzzle()
+    {
+        var objectToDelete = GameObject.Find("Canvas");
+        if (objectToDelete != null)
+        {
+            Destroy(objectToDelete); // Az objektum megsemmisítése
+        }
+        else
+        {
+            Debug.LogError("Az objektum nem található: ScreenUI");
+        }
     }
 
     public void loadPuzzle(string puzzlePath) {
         // Load puzzle
-        Debug.Log("Loading puzzle: " + puzzlePath);
+        var levels = GameObject.Find("ScreenUI").GetComponent<LevelsList>();
+        Debug.Log("PREFAB: " + puzzlePath);
+        GameObject prefab = levels.GetPrefabByName(puzzlePath);
+        
+        if (prefab != null)
+        {
+            GameObject newObject = Instantiate(prefab, Vector3.zero, Quaternion.identity); // Prefab alapján új elem létrehozása
+            newObject.name = "Canvas"; // Elem átnevezése
+            newObject.transform.SetParent(GameObject.Find("ScreenUI").transform);
+        }
+        else
+        {
+            Debug.Log("Couldn't load puzzle: " + puzzlePath);
+        }
+        
+        
     }
 }

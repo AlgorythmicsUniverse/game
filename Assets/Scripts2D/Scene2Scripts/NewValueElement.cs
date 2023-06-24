@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Scripts2D.Enums;
 using Scripts2D.Interfaces;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace Scripts2D.Scene2Scripts
         [SerializeField] private UI_InputWindow inputWindow;
         [SerializeField] private UI_DropdownVariableSelector dropdownVariableSelector;
         [SerializeField] private UI_ErrorPopup errorPopup;
+        [SerializeField] private GameObject invalidPositionBlock;
         List<IBlock> dropdownItems = new();
 
         private void Awake()
@@ -105,6 +107,9 @@ namespace Scripts2D.Scene2Scripts
                         newGameObject = Instantiate(prefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity, transform.parent);
                         newGameObject.transform.Find("Value").GetComponent<TMP_Text>().text = inputText;
                         newGameObject.transform.Find("Type").GetComponent<TMP_Text>().text = variableType;
+                        newGameObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text =
+                            DraggedBlockType.ValueBlock.ToString();
+                        newGameObject.transform.SetParent(invalidPositionBlock.transform,true);
                         UI_Blocker.Hide_Static();
                     }
                 }

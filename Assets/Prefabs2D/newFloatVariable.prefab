@@ -180,7 +180,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 350, y: 100}
+  m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &403245711984864709
 CanvasRenderer:
@@ -820,6 +820,12 @@ PrefabInstance:
       propertyPath: parentObject
       value: 
       objectReference: {fileID: 7900779622640183323}
+    - target: {fileID: 7959270842736668520, guid: 148d58946c7b2df47a1bea0d75297e40,
+        type: 3}
+      propertyPath: invalidPositionBlock
+      value: 
+      objectReference: {fileID: 2746887827818561242, guid: c1218162517d907428e032e0f4b2ee82,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 148d58946c7b2df47a1bea0d75297e40, type: 3}
 --- !u!224 &4259977068109022820 stripped

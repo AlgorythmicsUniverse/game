@@ -1,5 +1,6 @@
 using Scripts2D.Enums;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,79 +13,77 @@ namespace Scripts2D.Scene2Scripts
         private string savedVariableName;
         private string savedValue;
         private TYPE savedValueType;
+        [SerializeField] private ItemSlotType _itemSlotType;
+        [SerializeField] private GameObject invalidPositionBlock;
         public void OnDrop(PointerEventData eventData) 
         {
-            GameObject draggedObject = eventData.pointerDrag;
-            Debug.Log("OnDrop");
+            var draggedObject = eventData.pointerDrag;
             if (eventData.pointerDrag != null)
             {
-                if (gameObject.transform.Find("Type"))
+                switch (_itemSlotType)
                 {
-                    string targetObjectName = gameObject.transform.Find("Type").GetComponent<TMP_Text>().text + "Value";
-                    Transform targetObject = parentObject.transform.Find(targetObjectName);
-                    if (targetObject != null)
-                    {
-                        Vector2 itemSlotPosition = targetObject.GetComponent<RectTransform>().position;
-                        draggedObject.GetComponent<RectTransform>().position = itemSlotPosition;
-                    }
-                    else
-                    {
-                        draggedObject.GetComponent<RectTransform>().position = GetComponent<RectTransform>().position;
-                    }
-                }
-                else
-                {
-                    draggedObject.GetComponent<RectTransform>().position = GetComponent<RectTransform>().position;
-                }
-
-                if (draggedObject.transform.Find("Name"))
-                {
-                    savedVariableName = draggedObject.transform.Find("Name").GetComponent<TMP_Text>().text;
-                    Debug.Log("Variable name: " + savedVariableName);
-                }
-                if (draggedObject.transform.Find("Value"))
-                {
-                    Debug.Log("VALUE FOUND!");
-                    ParseValueByName(draggedObject);
+                    case ItemSlotType.ObjectPlace:
+                        Debug.Log("OnDrop Object");
+                        if (!IsObject(draggedObject))
+                        {
+                            Debug.Log("Not a valid object to place here!");
+                            draggedObject.GetComponent<RectTransform>().position = invalidPositionBlock.transform
+                                .GetComponent<RectTransform>().position;
+                        }
+                        else
+                        {
+                            draggedObject.GetComponent<RectTransform>().position = GetComponent<RectTransform>().position;
+                        }
+                        break;
+                    case ItemSlotType.NewVarPlace:
+                        Debug.Log("OnDrop Variable");
+                        if (IsObject(draggedObject))
+                        {
+                            Debug.Log("Not a valid object to place here!");
+                            draggedObject.GetComponent<RectTransform>().position = invalidPositionBlock.transform
+                                .GetComponent<RectTransform>().position;
+                        }
+                        else
+                        {
+                            draggedObject.GetComponent<RectTransform>().position = GetComponent<RectTransform>().position;
+                        }
+                        break;
+                    case ItemSlotType.NewVarValueSlot:
+                        Debug.Log("OnDrop Value to Var");
+                        if (draggedObject.transform.Find("Type") && parentObject.transform.Find("Type"))
+                        {
+                            var draggedObjectType = draggedObject.transform.Find("Type").GetComponent<TMP_Text>().text.ToLower();
+                            var gameObjectType = parentObject.transform.Find("Type")
+                                .GetComponent<TMP_Text>().text.ToLower();
+                            if (draggedObjectType.Equals(gameObjectType))
+                            {
+                                Debug.Log($"Item type : {draggedObjectType} " +
+                                          $"ItemSlot type: {gameObjectType}");
+                                draggedObject.GetComponent<RectTransform>().position =
+                                    GetComponent<RectTransform>().position;
+                            }
+                            else
+                            {
+                                draggedObject.GetComponent<RectTransform>().position = draggedObject.transform.parent.transform.GetComponent<RectTransform>().position - new Vector3(692,300,0);
+                            }
+                        }
+                        else
+                        {
+                            draggedObject.GetComponent<RectTransform>().position = draggedObject.transform.parent.transform.GetComponent<RectTransform>().position- new Vector3(692,300,0);
+                        }
+                        break;
                 }
             }
         }
 
-        private void ParseValueByName(GameObject draggedObject)
+        private bool IsObject(GameObject draggedObject)
         {
-            string gameObjectType = gameObject.name.Substring(0, gameObject.name.Length - 5);
-            Debug.Log(gameObjectType);
-            var draggedObjectType = draggedObject.transform.Find("Type").GetComponent<TMP_Text>().text.ToLower();
-            if (draggedObjectType == gameObjectType || gameObjectType == "var")
+            if (draggedObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text == DraggedBlockType.OperatorBlock.ToString() || draggedObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text == DraggedBlockType.ValueBlock.ToString() || draggedObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text == DraggedBlockType.ExistingVarBlock.ToString())
             {
-                switch (gameObjectType)
-                {
-                    case "var":
-                        savedValue = draggedObject.transform.Find("Value").GetComponent<TMP_Text>().text;
-                        //savedValueType = draggedObjectType;
-                        break;
-                    case "int":
-                        savedValue = draggedObject.transform.Find("Value").GetComponent<TMP_Text>().text;
-                        savedValueType = TYPE.INT;
-                        Debug.Log("INT dropped, value: " + savedValue);
-                        break;
-                    case "float":
-                        savedValue = draggedObject.transform.Find("Value").GetComponent<TMP_Text>().text;
-                        savedValueType = TYPE.FLOAT;
-                        Debug.Log("FLOAT dropped, value: " + savedValue);
-                        break;
-                    case "double":
-                        savedValue = draggedObject.transform.Find("Value").GetComponent<TMP_Text>().text;
-                        savedValueType = TYPE.DOUBLE;
-                        Debug.Log("DOUBLE dropped, value: " + savedValue);
-                        break;
-                }
+                return true;
             }
-            else
-            {
-                Debug.Log("Cannot assign value to variable!");
-            }
-        
+            return false;
         }
+        
     }
 }

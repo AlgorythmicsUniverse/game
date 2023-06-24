@@ -1,3 +1,4 @@
+using Scripts2D.Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;

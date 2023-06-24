@@ -111,6 +111,8 @@ namespace Scripts2D.Scene2Scripts
                 }
 
                 newObject.transform.Find("Name").GetComponent<TMP_Text>().text = inputName;
+                newObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text =
+                    DraggedBlockType.NewVarBlock.ToString();
                 newObject.transform.SetAsLastSibling();
                 usedVariableNames.Add(inputName, StringToVarType(variableType));
             }

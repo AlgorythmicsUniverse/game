@@ -1,3 +1,4 @@
+using Scripts2D.Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -47,6 +48,8 @@ namespace Scripts2D.Scene2Scripts
                     var transform1 = transform;
                     GameObject newObject = Instantiate(variablePrefab, transform1.position + new Vector3(0, 1, 0), Quaternion.identity, transform1.parent);
                     newObject.transform.Find("Name").GetComponent<TMP_Text>().text = variableName;
+                    newObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text =
+                        DraggedBlockType.ExistingVarBlock.ToString();
                 }
             }
         }
