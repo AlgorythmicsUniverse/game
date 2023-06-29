@@ -1,10 +1,9 @@
 using Scripts2D.Enums;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Scripts2D.Scene2Scripts
+namespace Scripts2D.Functionalities
 {
     public class ItemSlot : MonoBehaviour, IDropHandler
     {
@@ -78,7 +77,7 @@ namespace Scripts2D.Scene2Scripts
 
         private bool IsObject(GameObject draggedObject)
         {
-            if (draggedObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text == DraggedBlockType.OperatorBlock.ToString() || draggedObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text == DraggedBlockType.ValueBlock.ToString() || draggedObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text == DraggedBlockType.ExistingVarBlock.ToString())
+            if (draggedObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text == ObjectBlockTypeE.OperatorBlock.ToString() || draggedObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text == ObjectBlockTypeE.ValueBlock.ToString() || draggedObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text == ObjectBlockTypeE.ExistingVarBlock.ToString())
             {
                 return true;
             }

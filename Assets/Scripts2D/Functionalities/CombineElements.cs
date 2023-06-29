@@ -1,13 +1,11 @@
-using Scripts2D.Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Scripts2D.Scene2Scripts
+namespace Scripts2D.Functionalities
 {
     public class CombineElements : MonoBehaviour,IEndDragHandler, IBeginDragHandler, IDragHandler, IPointerDownHandler, IPointerUpHandler
     {
-        [SerializeField] private UI_ErrorPopup errorPopup;
         private Vector2 mousePosition;
         private Vector3 offset;
         private CanvasGroup canvasGroup;

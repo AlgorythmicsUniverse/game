@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Scripts2D.Functionalities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

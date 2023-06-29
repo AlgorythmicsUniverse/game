@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Scripts2D.Scene2Scripts
+namespace Scripts2D.Functionalities
 {
     public class IntVariable : MonoBehaviour
     {

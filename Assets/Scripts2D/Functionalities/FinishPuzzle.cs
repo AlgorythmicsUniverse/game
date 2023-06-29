@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Scripts2D.Scene2Scripts
+namespace Scripts2D.Functionalities
 {
     public class FinishPuzzle : MonoBehaviour,IPointerDownHandler
     {

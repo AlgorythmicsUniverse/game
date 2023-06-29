@@ -1,14 +1,12 @@
-using System;
 using System.Collections.Generic;
 using Scripts2D.Enums;
 using Scripts2D.Interfaces;
 using Scripts2D.Models2D;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Scripts2D.Scene2Scripts
+namespace Scripts2D.Functionalities
 {
     public class NewOperator : MonoBehaviour,IPointerDownHandler
     {
@@ -56,7 +54,7 @@ namespace Scripts2D.Scene2Scripts
             var transform1 = transform;
             GameObject newGameObject = Instantiate(prefab,transform1.position + new Vector3(0,1,0),Quaternion.identity,transform1.parent);
             newGameObject.transform.Find("Value").GetComponent<TMP_Text>().text = operatorType;
-            newGameObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text = DraggedBlockType.OperatorBlock.ToString();
+            newGameObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text = ObjectBlockTypeE.OperatorBlock.ToString();
         }
 
         private void SetCollectedNumber(int value)

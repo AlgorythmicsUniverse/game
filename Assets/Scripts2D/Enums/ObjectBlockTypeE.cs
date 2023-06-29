@@ -1,6 +1,6 @@
 namespace Scripts2D.Enums
 {
-    public enum DraggedBlockType
+    public enum ObjectBlockTypeE
     {
         ValueBlock,
         NewVarBlock,

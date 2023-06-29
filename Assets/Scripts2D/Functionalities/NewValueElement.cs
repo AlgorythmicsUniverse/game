@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Scripts2D.Scene2Scripts
+namespace Scripts2D.Functionalities
 {
     public class NewValueElement : MonoBehaviour, IPointerDownHandler
     {
@@ -108,7 +108,7 @@ namespace Scripts2D.Scene2Scripts
                         newGameObject.transform.Find("Value").GetComponent<TMP_Text>().text = inputText;
                         newGameObject.transform.Find("Type").GetComponent<TMP_Text>().text = variableType;
                         newGameObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text =
-                            DraggedBlockType.ValueBlock.ToString();
+                            ObjectBlockTypeE.ValueBlock.ToString();
                         newGameObject.transform.SetParent(invalidPositionBlock.transform,true);
                         UI_Blocker.Hide_Static();
                     }

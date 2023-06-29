@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Scripts2D.Scene2Scripts
+namespace Scripts2D.Functionalities
 {
     public class NewVariable : MonoBehaviour, IPointerDownHandler
     {
@@ -112,7 +112,7 @@ namespace Scripts2D.Scene2Scripts
 
                 newObject.transform.Find("Name").GetComponent<TMP_Text>().text = inputName;
                 newObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text =
-                    DraggedBlockType.NewVarBlock.ToString();
+                    ObjectBlockTypeE.NewVarBlock.ToString();
                 newObject.transform.SetAsLastSibling();
                 usedVariableNames.Add(inputName, StringToVarType(variableType));
             }

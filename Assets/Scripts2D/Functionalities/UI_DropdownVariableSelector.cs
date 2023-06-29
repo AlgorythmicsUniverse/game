@@ -6,7 +6,7 @@ using Scripts2D.Models2D;
 using TMPro;
 using UnityEngine;
 
-namespace Scripts2D.Scene2Scripts
+namespace Scripts2D.Functionalities
 {
     public class UI_DropdownVariableSelector : MonoBehaviour
     {

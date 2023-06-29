@@ -17,6 +17,5 @@ namespace Scripts2D.Models2D
         {
             return operatorType.GetSymbol();
         }
-        
     }
 }
