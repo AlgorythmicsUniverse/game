@@ -1,19 +1,20 @@
+using System.Collections;
 using Scripts2D.Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+
 namespace Scripts2D.Functionalities
 {
-    public class ItemSlot : MonoBehaviour, IDropHandler
+    public class ItemSlot : MonoBehaviour, IDropHandler, IEnumerable
     {
-
+        internal GameObject storedItem;
         [SerializeField] private RectTransform parentObject;
-        private string savedVariableName;
-        private string savedValue;
-        private TYPE savedValueType;
         [SerializeField] private ItemSlotType _itemSlotType;
         [SerializeField] private GameObject invalidPositionBlock;
+        [SerializeField] private UI_ErrorPopup _uiErrorPopup;
+        
         public void OnDrop(PointerEventData eventData) 
         {
             var draggedObject = eventData.pointerDrag;
@@ -28,10 +29,29 @@ namespace Scripts2D.Functionalities
                             Debug.Log("Not a valid object to place here!");
                             draggedObject.GetComponent<RectTransform>().position = invalidPositionBlock.transform
                                 .GetComponent<RectTransform>().position;
+                            draggedObject.transform.SetParent(invalidPositionBlock.transform);
                         }
                         else
                         {
-                            draggedObject.GetComponent<RectTransform>().position = GetComponent<RectTransform>().position;
+                            if (CombineElements.IsMatchingType(gameObject.GetComponent<Collider2D>(),draggedObject.transform.Find("Type").GetComponent<TMP_Text>().text.ToLower()))
+                            {
+                                draggedObject.transform.parent = transform;
+                                draggedObject.GetComponent<RectTransform>().position = GetComponent<RectTransform>().position;
+                                SetStoredObject(draggedObject);
+                            }
+                            else
+                            {
+                                var type = "";
+                                if (draggedObject.transform.Find("Type"))
+                                {
+                                    type = draggedObject.transform.Find("Type").GetComponent<TMP_Text>().text;
+                                }
+                                Debug.Log("Not a valid object to place here!");
+                                _uiErrorPopup.Show($"You can't place that item into this slot, your item's type is {type}!");
+                                draggedObject.GetComponent<RectTransform>().position = invalidPositionBlock.transform
+                                    .GetComponent<RectTransform>().position;
+                                draggedObject.transform.SetParent(invalidPositionBlock.transform);
+                            }
                         }
                         break;
                     case ItemSlotType.NewVarPlace:
@@ -39,12 +59,16 @@ namespace Scripts2D.Functionalities
                         if (IsObject(draggedObject))
                         {
                             Debug.Log("Not a valid object to place here!");
+                            _uiErrorPopup.Show("You can't place that item into this slot!");
                             draggedObject.GetComponent<RectTransform>().position = invalidPositionBlock.transform
                                 .GetComponent<RectTransform>().position;
+                            draggedObject.transform.SetParent(invalidPositionBlock.transform);
                         }
                         else
                         {
+                            draggedObject.transform.parent = transform;
                             draggedObject.GetComponent<RectTransform>().position = GetComponent<RectTransform>().position;
+                            SetStoredObject(draggedObject);
                         }
                         break;
                     case ItemSlotType.NewVarValueSlot:
@@ -60,15 +84,20 @@ namespace Scripts2D.Functionalities
                                           $"ItemSlot type: {gameObjectType}");
                                 draggedObject.GetComponent<RectTransform>().position =
                                     GetComponent<RectTransform>().position;
+                                SetStoredObject(draggedObject);
                             }
                             else
                             {
                                 draggedObject.GetComponent<RectTransform>().position = draggedObject.transform.parent.transform.GetComponent<RectTransform>().position - new Vector3(692,300,0);
+                                _uiErrorPopup.Show("You can't place that item into this slot!");
+                                draggedObject.transform.SetParent(invalidPositionBlock.transform);
                             }
                         }
                         else
                         {
                             draggedObject.GetComponent<RectTransform>().position = draggedObject.transform.parent.transform.GetComponent<RectTransform>().position- new Vector3(692,300,0);
+                            _uiErrorPopup.Show("You can't place that item into this slot!");
+                            draggedObject.transform.SetParent(invalidPositionBlock.transform);
                         }
                         break;
                 }
@@ -83,6 +112,20 @@ namespace Scripts2D.Functionalities
             }
             return false;
         }
-        
+
+        private void SetStoredObject(GameObject gameObject)
+        {
+            storedItem = gameObject;
+        }
+
+        public GameObject GetStoredObject()
+        {
+            return storedItem;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

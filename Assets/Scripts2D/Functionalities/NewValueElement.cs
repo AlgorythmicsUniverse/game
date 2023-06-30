@@ -63,7 +63,7 @@ namespace Scripts2D.Functionalities
                     charLimit = 8;
                     break;
                 case "STRING":
-                    validCharacters = "qwertyuiopasdfghjklzxcvbnm0123456789.!?";
+                    validCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~ \t\n";
                     charLimit = 20;
                     break;
                 case "BOOLEAN":
@@ -106,10 +106,10 @@ namespace Scripts2D.Functionalities
                     {
                         newGameObject = Instantiate(prefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity, transform.parent);
                         newGameObject.transform.Find("Value").GetComponent<TMP_Text>().text = inputText;
+                        newGameObject.transform.Find("Value").transform.Find("Value").GetComponent<TMP_Text>().text = inputText;
                         newGameObject.transform.Find("Type").GetComponent<TMP_Text>().text = variableType;
                         newGameObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text =
                             ObjectBlockTypeE.ValueBlock.ToString();
-                        newGameObject.transform.SetParent(invalidPositionBlock.transform,true);
                         UI_Blocker.Hide_Static();
                     }
                 }

@@ -15,7 +15,7 @@ namespace Scripts2D.Functionalities
         {
             UI_Blocker.Show_Static();
             inputWindow.Show(
-                "abcdefghijklmnopqrstuvwxyz1234567890",
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
                 12,
                 () =>
                 {
@@ -47,7 +47,9 @@ namespace Scripts2D.Functionalities
                 {
                     var transform1 = transform;
                     GameObject newObject = Instantiate(variablePrefab, transform1.position + new Vector3(0, 1, 0), Quaternion.identity, transform1.parent);
+                    newObject.transform.Find("Type").GetComponent<TMP_Text>().text = pair.Value.ToString().ToLower();
                     newObject.transform.Find("Name").GetComponent<TMP_Text>().text = variableName;
+                    newObject.transform.Find("Name").transform.Find("Name").GetComponent<TMP_Text>().text = variableName;
                     newObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text =
                         ObjectBlockTypeE.ExistingVarBlock.ToString();
                 }

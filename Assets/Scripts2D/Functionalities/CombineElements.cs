@@ -9,13 +9,14 @@ namespace Scripts2D.Functionalities
         private Vector2 mousePosition;
         private Vector3 offset;
         private CanvasGroup canvasGroup;
-        private bool mouseButtonReleased;
+        private static bool mouseButtonReleased;
         private Transform originalParent;
 
         private void Awake()
         {
             canvasGroup = GetComponent<CanvasGroup>();
-            originalParent = transform.parent;
+            var parent = transform.parent;
+            originalParent = parent;
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -96,21 +97,34 @@ namespace Scripts2D.Functionalities
                 if (collision.transform.Find("Type") != null && objectType != null)
                 {
                     Debug.Log($"type of itemplace found: {collision.transform.Find("Type").GetComponent<TMP_Text>().text}" );
-                    if (collision.transform.Find("Type").GetComponent<TMP_Text>().text == "var")
+                    if (IsMatchingType(collision, objectType))
                     {
-                        collision.transform.Find("Type").GetComponent<TMP_Text>().text = objectType;
+                        Debug.Log("Matching type!");
+                        if (mouseButtonReleased)
+                        {
+                            Debug.Log("Object type: " + objectType);
+                            transform.SetParent(collision.transform);
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("Not matching types!");
                     }
                 }
-                if (mouseButtonReleased)
+                else
                 {
-                    Debug.Log("Object type: " + objectType);
-                    transform.SetParent(collision.transform);
+                    if (mouseButtonReleased)
+                    {
+                        Debug.Log("Object  type: " + objectType);
+                        transform.SetParent(collision.transform);
+                    }
                 }
-
                 mouseButtonReleased = false;
             }
         }
-
-
+        internal static bool IsMatchingType(Collider2D collision,string objectType)
+        {
+            return collision.transform.Find("Type").GetComponent<TMP_Text>().text.ToLower().Equals(objectType.ToLower());
+        }
     }
 }

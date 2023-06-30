@@ -25,19 +25,19 @@ namespace Scripts2D.Functionalities
         private BoxCollider boxCollider;
         private int clickCount;
         private static Dictionary<string, TYPE> usedVariableNames = new Dictionary<string, TYPE>();
-        private static List<IBlock> unlockedTypes = new List<IBlock>();
+        private static List<IBlock> unlockedTypes = new();
 
         public void Awake()
         {
             usedVariableNames.Clear();
-            unlockedTypes.Clear();
+            
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
             UI_Blocker.Show_Static();
             inputWindow.Show(
-                "abcdefghijklmnopqrstuvwxyz1234567890",
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
                 12,
                 () =>
                 {
