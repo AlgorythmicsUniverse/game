@@ -18,12 +18,7 @@ namespace Scripts2D.Functionalities
         private int clickCount;
         private static List<IBlock> unlockedOperators = new();
 
-
-        private void Start()
-        {
-            unlockedOperators = new List<IBlock>();
-        }
-
+        
         public void OnPointerDown(PointerEventData eventData)
         {
             UI_Blocker.Show_Static();
@@ -54,6 +49,7 @@ namespace Scripts2D.Functionalities
             var transform1 = transform;
             GameObject newGameObject = Instantiate(prefab,transform1.position + new Vector3(0,1,0),Quaternion.identity,transform1.parent);
             newGameObject.transform.Find("Value").GetComponent<TMP_Text>().text = operatorType;
+            newGameObject.transform.Find("Value").transform.Find("Value").GetComponent<TMP_Text>().text = operatorType;
             newGameObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text = ObjectBlockTypeE.OperatorBlock.ToString();
         }
 

@@ -134,6 +134,9 @@ namespace Controllers
                 case CodeObjectType.Operator:
                     NewOperator.UnlockOperator(obj.GetComponent<CodeObject>().Code);
                     break;
+                case CodeObjectType.Expression:
+                    NewExpression.UnlockExpression(obj.GetComponent<CodeObject>().Code.ToLower());
+                    break;
                 case CodeObjectType.DataType:
                     NewVariable.UnlockType(obj.GetComponent<CodeObject>().Code);
                     break;
