@@ -30,14 +30,22 @@ namespace Scripts2D.Functionalities
         public void Awake()
         {
             usedVariableNames.Clear();
+<<<<<<< HEAD:Assets/Scripts2D/Functionalities/NewVariable.cs
             
+=======
+            unlockedTypes.Clear();
+>>>>>>> master:Assets/Scripts2D/Scene2Scripts/NewVariable.cs
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
             UI_Blocker.Show_Static();
             inputWindow.Show(
+<<<<<<< HEAD:Assets/Scripts2D/Functionalities/NewVariable.cs
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+=======
+                "abcdefghijklmnopqrstuvwxyz1234567890",
+>>>>>>> master:Assets/Scripts2D/Scene2Scripts/NewVariable.cs
                 12,
                 () =>
                 {
@@ -111,8 +119,11 @@ namespace Scripts2D.Functionalities
                 }
 
                 newObject.transform.Find("Name").GetComponent<TMP_Text>().text = inputName;
+<<<<<<< HEAD:Assets/Scripts2D/Functionalities/NewVariable.cs
                 newObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text =
                     ObjectBlockTypeE.NewVarBlock.ToString();
+=======
+>>>>>>> master:Assets/Scripts2D/Scene2Scripts/NewVariable.cs
                 newObject.transform.SetAsLastSibling();
                 usedVariableNames.Add(inputName, StringToVarType(variableType));
             }
