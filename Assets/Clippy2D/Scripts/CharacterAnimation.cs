@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Clippy2D.Scripts {
@@ -36,7 +37,10 @@ namespace Clippy2D.Scripts {
         private void Awake() {
             _image = GetComponent<Image>();
             _tips = GameObject.FindGameObjectWithTag("Tips");
-            _tips.SetActive(false);
+            if (!(GameController.GetCurrentLevel() == "Level1" && SceneManager.GetActiveScene().name == "Chapter0")) {
+                _tips.SetActive(false);
+            }
+            Debug.Log("Scene: " + SceneManager.GetActiveScene().name);
             Debug.Log(_tips.name);
         }
 
@@ -121,13 +125,6 @@ namespace Clippy2D.Scripts {
                 }
             }
             else {
-                // Stay on the last frame while the mouse is over the button
-                if (!_isHovering) {
-                    currentState = AnimationState.Idle1;
-                    _idle1FrameIndex = 0;
-                    _hoverInFrameIndex = 0;
-                    _hoverInLastFrameIndex = hoverInFrames.Length;
-                }
 
                 if (_isHovering && _hoverInFrameIndex == hoverInFrames.Length) {
                     _allowedToClick = true;
@@ -166,7 +163,7 @@ namespace Clippy2D.Scripts {
         }
 
         public void OnPointerExit(PointerEventData eventData) {
-            if (currentState != AnimationState.HoverOut) {
+            if (!_tips.activeSelf && currentState != AnimationState.HoverOut) {
                 currentState = AnimationState.HoverOut;
                 _hoverOutFrameIndex = hoverOutFrames.Length - _hoverInLastFrameIndex - 1;
                 _hoverOutFrameIndex = _hoverOutFrameIndex < 0 ? 0 : _hoverOutFrameIndex;

@@ -1,6 +1,5 @@
 using Scripts2D.Enums;
 using Scripts2D.Interfaces;
-using Scripts2D.Scene2Scripts;
 using UnityEngine;
 
 namespace Scripts2D.Models2D

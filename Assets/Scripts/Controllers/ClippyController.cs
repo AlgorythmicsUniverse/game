@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Scripts2D.Scene2Scripts;
+using Scripts2D.Functionalities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
