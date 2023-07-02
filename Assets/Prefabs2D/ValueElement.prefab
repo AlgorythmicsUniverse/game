@@ -492,15 +492,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 420420420420
+  m_text: 420
   m_isRightToLeft: 0
-<<<<<<< HEAD
   m_fontAsset: {fileID: 11400000, guid: dec04bc3a06d00e4bbef9834b6206d33, type: 2}
   m_sharedMaterial: {fileID: 8749987307580099659, guid: dec04bc3a06d00e4bbef9834b6206d33,
-=======
-  m_fontAsset: {fileID: 11400000, guid: c71f108a56c776d46a93ede5476e8362, type: 2}
-  m_sharedMaterial: {fileID: -7954215919737765264, guid: c71f108a56c776d46a93ede5476e8362,
->>>>>>> master
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

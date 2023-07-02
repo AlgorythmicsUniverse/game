@@ -15,11 +15,7 @@ namespace Scripts2D.Functionalities
         {
             UI_Blocker.Show_Static();
             inputWindow.Show(
-<<<<<<< HEAD:Assets/Scripts2D/Functionalities/ExistingVariable.cs
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
-=======
-                "abcdefghijklmnopqrstuvwxyz1234567890",
->>>>>>> master:Assets/Scripts2D/Scene2Scripts/ExistingVariable.cs
                 12,
                 () =>
                 {

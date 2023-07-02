@@ -756,10 +756,7 @@ MonoBehaviour:
   inputWindow: {fileID: 6266067681124712085}
   dropdownVariableSelector: {fileID: 7030728771965351395}
   errorPopup: {fileID: 1750684791533641149}
-<<<<<<< HEAD
   invalidPositionBlock: {fileID: 0}
-=======
->>>>>>> master
 --- !u!1 &6266067681418913006
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,7 +1027,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
-<<<<<<< HEAD
 --- !u!1 &8583862239954191545
 GameObject:
   m_ObjectHideFlags: 0
@@ -1069,8 +1065,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
-=======
->>>>>>> master
 --- !u!1001 &305060989733599716
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1348,15 +1342,12 @@ PrefabInstance:
       propertyPath: inputWindow
       value: 
       objectReference: {fileID: 6592353020324488029}
-<<<<<<< HEAD
     - target: {fileID: 9069141397574100303, guid: 920f5e9814521dc469f2796b25ba8198,
         type: 3}
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2308429168852270076, guid: dec04bc3a06d00e4bbef9834b6206d33,
         type: 2}
-=======
->>>>>>> master
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 920f5e9814521dc469f2796b25ba8198, type: 3}
 --- !u!224 &2925452419824483889 stripped
@@ -2076,15 +2067,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-<<<<<<< HEAD
     - target: {fileID: 3820600136817915137, guid: 71cdea1d53f9b624a931215893607098,
         type: 3}
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2308429168852270076, guid: dec04bc3a06d00e4bbef9834b6206d33,
         type: 2}
-=======
->>>>>>> master
     - target: {fileID: 4019655772915453901, guid: 71cdea1d53f9b624a931215893607098,
         type: 3}
       propertyPath: errorPopup
@@ -2237,15 +2225,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ac5956874d2f8244a2ba254621c9fac, type: 3}
-<<<<<<< HEAD
-=======
---- !u!224 &1711656153317768198 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 4583639651899931239, guid: 4ac5956874d2f8244a2ba254621c9fac,
-    type: 3}
-  m_PrefabInstance: {fileID: 2908584054536144481}
-  m_PrefabAsset: {fileID: 0}
->>>>>>> master
 --- !u!1001 &3157921550250298386
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3559,15 +3538,12 @@ PrefabInstance:
       propertyPath: dropdownVariableSelector
       value: 
       objectReference: {fileID: 7030728771965351395}
-<<<<<<< HEAD
     - target: {fileID: 6165684302966217927, guid: 7a584321882659e4bb512f19141a9c7c,
         type: 3}
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2308429168852270076, guid: dec04bc3a06d00e4bbef9834b6206d33,
         type: 2}
-=======
->>>>>>> master
     - target: {fileID: 6599933161887185061, guid: 7a584321882659e4bb512f19141a9c7c,
         type: 3}
       propertyPath: m_Pivot.x
