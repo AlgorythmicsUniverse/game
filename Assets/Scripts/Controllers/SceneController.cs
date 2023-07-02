@@ -8,7 +8,7 @@ public class SceneController : MonoBehaviour
         GameController.Instance.Reload();
     }
 
-    public void nextPuzzle() {
+    public static void nextPuzzle() {
         GameController.Instance.nextPuzzle();
     }
 

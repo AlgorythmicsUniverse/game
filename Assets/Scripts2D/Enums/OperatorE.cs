@@ -24,8 +24,7 @@ namespace Scripts2D.Enums
         [Description("%")]
         Modulus,
         [Description("=")]
-        Assignment,
-        
+        Assignment
     }
 
     public static class OperatorExtensions
@@ -35,7 +34,6 @@ namespace Scripts2D.Enums
             var memberInfo = op.GetType().GetMember(op.ToString());
             var descriptionAttribute = memberInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false)
                 as DescriptionAttribute[];
-        
             return descriptionAttribute.Length > 0 ? descriptionAttribute[0].Description : op.ToString();
         }
     }
