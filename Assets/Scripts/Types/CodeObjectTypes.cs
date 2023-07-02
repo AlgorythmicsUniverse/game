@@ -5,5 +5,6 @@ public enum CodeObjectType {
     Class,
     DataType,
     Feature,
-    Operator
+    Operator,
+    Expression
 }

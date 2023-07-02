@@ -278,7 +278,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '%'
+  m_text: IF
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dec04bc3a06d00e4bbef9834b6206d33, type: 2}
   m_sharedMaterial: {fileID: 2308429168852270076, guid: dec04bc3a06d00e4bbef9834b6206d33,
@@ -431,7 +431,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '%'
+  m_text: IF
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dec04bc3a06d00e4bbef9834b6206d33, type: 2}
   m_sharedMaterial: {fileID: 2308429168852270076, guid: dec04bc3a06d00e4bbef9834b6206d33,
@@ -581,7 +581,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: operator
+  m_text: expression
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -665,7 +665,7 @@ GameObject:
   - component: {fileID: 8610305678292886901}
   - component: {fileID: 8992249920108046647}
   m_Layer: 5
-  m_Name: Operator
+  m_Name: Expression
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -54,7 +54,7 @@ namespace Scripts2D.Functionalities
             var vector = new Vector3(mousePosition.x, mousePosition.y, 0f) + offset;
             transform.position = vector;
         }
-
+        
         public void OnEndDrag(PointerEventData eventData)
         {
             //var objectName = gameObject.transform.Find("Name").GetComponent<TMP_Text>().text;

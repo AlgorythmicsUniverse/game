@@ -58,7 +58,15 @@ namespace Scripts2D.Functionalities
                         variableDropdown.options.Add(new TMP_Dropdown.OptionData() { text = newItem.GetVarType().ToString() });
                     }
                 }
-                
+                else if (IsExpression(items[0]))
+                {
+                    foreach (var item in items)
+                    {
+                        var newItem = (Expression)item;
+                        variableDropdown.options.Add(new TMP_Dropdown.OptionData(){text = newItem.GetExpression().ToString()});
+                    }
+                }
+
                 DropdownItemSelected(variableDropdown);
 
                 variableDropdown.onValueChanged.AddListener(delegate { DropdownItemSelected(variableDropdown); });
@@ -96,6 +104,16 @@ namespace Scripts2D.Functionalities
 
             return false;
         }
+        private bool IsExpression(IBlock item)
+        {
+            if (item is Expression nItem && nItem.GetExpression() != null)
+            {
+                Debug.Log("EZ EGY EXPRESSION");
+                return true;
+            }
+
+            return false;
+        }
 
         private bool IsVariable(IBlock item)
         {
@@ -120,6 +138,5 @@ namespace Scripts2D.Functionalities
             Debug.Log($"SELECTED FROM DROPDOWN: {dropdown.options[index].text}");
             variableType = dropdown.options[index].text;
         }
-
     }
 }

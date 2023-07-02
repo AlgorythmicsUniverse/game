@@ -5,6 +5,7 @@ namespace Scripts2D.Enums
         ValueBlock,
         NewVarBlock,
         OperatorBlock,
-        ExistingVarBlock
+        ExistingVarBlock,
+        ExpressionBlock
     }
 }
