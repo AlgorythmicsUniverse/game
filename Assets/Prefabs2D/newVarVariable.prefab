@@ -234,7 +234,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   errorPopup: {fileID: 5876736189365955285, guid: 7283b72e0b51d7d4f85f8e7aa8300142,
     type: 3}
-  _draggedBlockType: 1
 --- !u!225 &-3860316902789747191
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -749,12 +748,12 @@ PrefabInstance:
     - target: {fileID: 7959270842736668519, guid: 148d58946c7b2df47a1bea0d75297e40,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7959270842736668519, guid: 148d58946c7b2df47a1bea0d75297e40,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7959270842736668519, guid: 148d58946c7b2df47a1bea0d75297e40,
         type: 3}

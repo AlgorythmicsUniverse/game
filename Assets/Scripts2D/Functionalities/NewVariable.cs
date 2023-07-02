@@ -26,7 +26,7 @@ namespace Scripts2D.Functionalities
         private int clickCount;
         private static Dictionary<string, TYPE> usedVariableNames = new Dictionary<string, TYPE>();
         private static List<IBlock> unlockedTypes = new();
-
+        
         public void Awake()
         {
             usedVariableNames.Clear();
@@ -70,6 +70,7 @@ namespace Scripts2D.Functionalities
             );
         }
 
+        
         private void CreateNewVariable(string inputName, string variableType)
         {
             if (IsExistingVariableName(inputName))
@@ -80,7 +81,7 @@ namespace Scripts2D.Functionalities
             else
             {
                 clickCount++;
-                GameObject newObject;
+                GameObject newObject = null;
                 variableType = variableType.ToLower();
                 switch (variableType)
                 {
@@ -104,9 +105,6 @@ namespace Scripts2D.Functionalities
                         break;
                     case "bool":
                         newObject = Instantiate(boolPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity, transform.parent);
-                        break;
-                    default:
-                        newObject = Instantiate(varPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity, transform.parent);
                         break;
                 }
 
@@ -188,14 +186,6 @@ namespace Scripts2D.Functionalities
         public static Dictionary<string, TYPE> GetUsedVariableNames()
         {
             return usedVariableNames;
-        }
-
-        public static void ChangeVariableType(string varName, TYPE newType)
-        {
-            if (usedVariableNames.ContainsKey(varName))
-            {
-                usedVariableNames[varName] = newType;
-            }
         }
     }
 }

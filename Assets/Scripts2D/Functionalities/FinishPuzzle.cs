@@ -12,7 +12,7 @@ namespace Scripts2D.Functionalities
         public void OnPointerDown(PointerEventData eventData)
         {
             _errorPopup = gameObject.transform.parent.Find("UI_ErrorPopup").GetComponent<UI_ErrorPopup>();
-            if (AllBlockCorrect(transform.parent.Find("Geometry")))
+            if (IsAllSlotFilled(transform.parent.Find("Geometry")))
             {
                 SceneController.nextPuzzle();
                 Debug.Log($"All slots filled!");
@@ -21,9 +21,9 @@ namespace Scripts2D.Functionalities
             {
                 _errorPopup.Show("You have to fill all item slots! Try Again!");
             }
-        }
+        } 
 
-        private bool AllBlockCorrect(Transform parent)
+        private bool IsAllSlotFilled(Transform parent)
         {
             var children = parent.GetComponentsInChildren<ItemSlot>();
             Debug.Log($"COUNT: {children.Length.ToString()}");

@@ -19,7 +19,23 @@ public class Constants {
     public static readonly Dictionary<string, List<Puzzle>> Puzzles = new Dictionary<string, List<Puzzle>>() {
         { "Chapter0", new List<Puzzle>() {
             new Puzzle("Your very first puzzle", "You'll be solving a simple coding puzzle to get used to the interface", "Level1"),
-            new Puzzle("Your second puzzle", "Getting to know double type", "Level2")
-            }}
+            new Puzzle("Your second puzzle", "Getting to know int type", "Level2"),
+            new Puzzle("Last tutorial puzzle","Variable","Level3")
+            }},
+        {"Chapter1",new List<Puzzle>() {
+            new Puzzle("First real puzzle","Fill","Level1"),
+            new Puzzle("Second real puzzle","Fill","Level2"),
+            new Puzzle("Third real puzzle","Fill","Level3")
+        }},
+        {"Chapter2",new List<Puzzle>() {
+            new Puzzle("First real puzzle","Fill","Level1"),
+            new Puzzle("Second real puzzle","Fill","Level2"),
+            new Puzzle("Third real puzzle","Fill","Level3")
+        }},
+        {"Chapter3",new List<Puzzle>() {
+            new Puzzle("First real puzzle","Fill","Level1"),
+            new Puzzle("Second real puzzle","Fill","Level2"),
+            new Puzzle("Third real puzzle","Fill","Level3")
+        }}
     };
 }

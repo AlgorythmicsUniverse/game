@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
 
     private bool Is3D = true;
     private bool lockSwitch = false;
-    private int currentPuzzle = 0; // -1 means no puzzles loaded yet
+    private static int currentPuzzle = 0; // -1 means no puzzles loaded yet
     private GameObject loadedPuzzle;
     private bool paused = false;
 
@@ -194,5 +194,9 @@ public class GameController : MonoBehaviour
         }
         
         
+    }
+
+    public static string GetCurrentLevel() {
+        return Constants.Puzzles[SceneManager.GetActiveScene().name][currentPuzzle].PrefabName;
     }
 }
