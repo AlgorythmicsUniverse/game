@@ -106,7 +106,7 @@ namespace Scripts2D.Functionalities
 
         private bool IsObject(GameObject draggedObject)
         {
-            if (draggedObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text == ObjectBlockTypeE.OperatorBlock.ToString() || draggedObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text == ObjectBlockTypeE.ValueBlock.ToString() || draggedObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text == ObjectBlockTypeE.ExistingVarBlock.ToString())
+            if (draggedObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text == ObjectBlockTypeE.ExpressionBlock.ToString() || draggedObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text == ObjectBlockTypeE.OperatorBlock.ToString() || draggedObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text == ObjectBlockTypeE.ValueBlock.ToString() || draggedObject.transform.Find("ObjectType").GetComponent<TMP_Text>().text == ObjectBlockTypeE.ExistingVarBlock.ToString())
             {
                 return true;
             }

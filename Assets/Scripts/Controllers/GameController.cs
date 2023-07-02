@@ -148,7 +148,6 @@ public class GameController : MonoBehaviour
                 // Unlock next chapter
                 LevelController.Instance.unlockChapter(nextChapter);
                 Debug.Log("Unlocked next chapter: " + nextChapter);
-
                 // Load next chapter
                 LevelController.Instance.loadChapter(nextChapter);
                 currentPuzzle = 0;
